@@ -47,6 +47,12 @@
   --accent: #3476d9;
   --accent-soft: rgb(52 118 217 / 0.1);
 
+  /* Logotipo: "Life" pieno, "OS" in gradiente — gli stessi blu dell'icona
+     dell'app, che nasce da #0088FF (`AppIcon.icon/icon.json`). */
+  --wordmark-life: #0d1a3a;
+  --wordmark-os-from: #2c68f0;
+  --wordmark-os-to: #56b3f8;
+
   /* Ombre — morbide, mai drammatiche */
   --shadow-xs: 0 1px 2px rgb(10 16 23 / 0.04);
   --shadow-sm: 0 1px 3px rgb(10 16 23 / 0.05), 0 6px 16px -8px rgb(10 16 23 / 0.08);
@@ -81,6 +87,13 @@
 
   --accent: #6fb0f0;
   --accent-soft: rgb(111 176 240 / 0.14);
+
+  /* Sul quasi-nero "Life" non può restare blu notte, e i due blu di "OS"
+     salgono di luminosità: è la stessa correzione che l'app applica alle
+     tinte delle aree in modalità scura. */
+  --wordmark-life: #f2f5f8;
+  --wordmark-os-from: #6fb0f0;
+  --wordmark-os-to: #86d6ff;
 
   --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
   --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.5), 0 6px 16px -8px rgb(0 0 0 / 0.6);
@@ -222,6 +235,29 @@
       color-mix(in srgb, var(--tint, var(--accent)) 12%, transparent) 0%,
       transparent 42%
     );
+  }
+
+  /* La "OS" del logotipo. Il colore pieno resta come ripiego: se il
+     ritaglio sul testo non viene applicato — stampa, contrasto forzato —
+     il gradiente sparisce e senza `color` resterebbe testo invisibile. */
+  .wordmark-os {
+    color: var(--wordmark-os-from);
+    background-image: linear-gradient(
+      100deg,
+      var(--wordmark-os-from) 0%,
+      var(--wordmark-os-to) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @media (forced-colors: active) {
+    .wordmark-os {
+      background-image: none;
+      -webkit-text-fill-color: currentColor;
+      color: currentColor;
+    }
   }
 
   .text-gradient {

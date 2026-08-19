@@ -21,6 +21,9 @@ const nextConfig: NextConfig = {
   // GitHub Pages serve /foo/ come /foo/index.html: con le barre finali
   // i percorsi combaciano invece di dipendere da una redirezione.
   trailingSlash: true,
+  // Senza un server non c'è nessuno che ridimensioni le immagini al volo:
+  // vengono servite come sono. Le nostre sono già alla misura giusta.
+  images: { unoptimized: true },
 };
 
 export default nextConfig;

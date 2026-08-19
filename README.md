@@ -98,6 +98,42 @@ generate: un export statico le scriverebbe come file **senza estensione**,
 e Pages li servirebbe come `application/octet-stream` — nessun crawler
 accetta un'anteprima così.
 
+## Il logo
+
+`components/ui/logo.tsx`: l'**icona vera dell'app** più il logotipo.
+
+L'icona è quella di `ios/AppIcon.icon`, ritagliata (il disegno riempiva il
+67% della tela, ora il 79% — la proporzione con cui Apple disegna le
+icone) e ridotta a 128px, che copre un logo da 30pt anche su schermi 3×.
+
+Sono **due** file, `lifeos-icon-light.png` e `lifeos-icon-dark.png`, e non
+è un vezzo: l'icona di LifeOS ha un layer chiaro e uno scuro, e **il fondo
+fa parte del disegno** — bianco di là, nero di qua. Una sola immagine
+lascerebbe un rettangolo bianco sul fondo nero.
+
+Sono `next/image` con import statico, mai `<img src="/…">`: il sito è
+pubblicato sotto un prefisso, e un percorso assoluto scritto a mano non lo
+riceve — l'immagine sparirebbe **solo in produzione**.
+
+Il logotipo è testo vero: «Life» pieno, «OS» con `background-clip: text`
+sui blu dell'icona (che nasce da `#0088FF`). I quattro colori stanno in
+`globals.css` come `--wordmark-*`, quindi il tema li cambia da sé. La
+classe `.wordmark-os` tiene un `color` pieno come ripiego: senza, in
+contrasto forzato o in stampa il gradiente sparisce e resta testo
+invisibile.
+
+### L'immagine di anteprima
+
+`app/opengraph-image.png` è un PNG statico, generato una volta con Chrome
+headless a partire da `scripts/opengraph.html`:
+
+```bash
+node scripts/render-opengraph.mjs
+```
+
+Non è generata da `next/og`: satori non ha un font in grassetto e il
+titolo usciva sottile. Chrome ha i font veri.
+
 ## Le tre regole che il codice segue
 
 1. **I token vengono dall'app.** Le tinte delle sei aree, i raggi e la

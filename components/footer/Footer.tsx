@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Wordmark } from "@/components/ui/wordmark";
+import { Logo } from "@/components/ui/logo";
 
 const columns = [
   {
@@ -26,9 +26,8 @@ export function Footer() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
         <div className="flex flex-col gap-10 sm:flex-row sm:justify-between">
           <div className="flex flex-col gap-3">
-            <Link href="#top" className="flex items-center gap-2.5 text-[16px] font-semibold">
-              <Wordmark size={20} />
-              LifeOS
+            <Link href="#top" aria-label="LifeOS, home" className="text-[18px]">
+              <Logo iconSize={26} />
             </Link>
             <p className="max-w-xs text-[13.5px] leading-relaxed text-ink-tertiary">
               The personal operating system for your life, home and money.

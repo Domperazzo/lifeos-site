@@ -1,4 +1,4 @@
-import { Wordmark } from "@/components/ui/wordmark";
+import { AppIcon } from "@/components/ui/logo";
 
 /**
  * Un widget medio della schermata Home (338 × 158 pt).
@@ -26,7 +26,7 @@ export function WidgetMockup() {
       />
       <div className="relative flex h-full flex-col justify-between">
         <div className="flex items-center gap-2">
-          <Wordmark size={15} />
+          <AppIcon size={16} />
           <span className="text-[12px] font-semibold tracking-[-0.01em]">LifeOS</span>
         </div>
 

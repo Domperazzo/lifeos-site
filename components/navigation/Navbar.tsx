@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { Wordmark } from "@/components/ui/wordmark";
+import { Logo } from "@/components/ui/logo";
 import { CTA } from "@/components/ui/button";
 
 const links = [
@@ -55,12 +55,8 @@ export function Navbar() {
         className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 sm:px-8"
         aria-label="Main"
       >
-        <Link
-          href="#top"
-          className="flex items-center gap-2.5 text-[17px] font-semibold tracking-[-0.02em]"
-        >
-          <Wordmark />
-          LifeOS
+        <Link href="#top" aria-label="LifeOS, home" className="text-[19px]">
+          <Logo iconSize={30} />
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
