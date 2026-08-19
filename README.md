@@ -129,6 +129,32 @@ classe `.wordmark-os` tiene un `color` pieno come ripiego: senza, in
 contrasto forzato o in stampa il gradiente sparisce e resta testo
 invisibile.
 
+### La favicon
+
+Tre file, non uno, e con **due ritagli diversi**:
+
+| File | Misura | Ritaglio | Dove si vede |
+|---|---|---|---|
+| `app/icon.png` | 32 | stretto (940) | la scheda del browser |
+| `app/icon1.png` | 180 | icona (1160) | segnalibri, scorciatoie |
+| `app/apple-icon.png` | 180 | icona (1160) | schermata Home di iOS |
+
+Il ritaglio stretto non è un'incoerenza: a 32px il margine dell'icona
+mangia metà del quadrato e l'anello diventa una macchia. È correzione
+ottica — un marchio piccolo si disegna più pieno di uno grande.
+
+Dichiararne solo uno da 192px non basta: il browser lo rimpicciolisce da
+sé a 16px, e lo fa peggio di quanto lo faccia un file preparato alla
+misura giusta.
+
+⚠️ **Le favicon restano in cache in modo tenace**, per origine e non per
+pagina: dopo un cambio il browser può mostrare la vecchia per giorni. Il
+file servito si controlla così, che ignora la cache:
+
+```bash
+curl -s https://domperazzo.github.io/lifeos-site/icon.png | shasum -a 256
+```
+
 ### L'immagine di anteprima
 
 `app/opengraph-image.png` è un PNG statico, generato una volta con Chrome
