@@ -50,11 +50,16 @@ jobs:
 
       - run: npm ci
 
-      # Lint e tipi prima della build: un sito rotto non deve arrivare in
-      # pubblico solo perché `next build` è indulgente.
       - run: npm run lint
-      - run: npx tsc --noEmit
 
+      # `next build` fa anche il controllo dei tipi e fallisce se non
+      # passa: è quello il cancello, non un `tsc` a parte.
+      #
+      # Un `npx tsc --noEmit` messo *prima* della build qui fallisce, e in
+      # locale no: le dichiarazioni per gli import di immagini stanno in
+      # `next-env.d.ts`, che Next **genera** e che non è versionato. Su una
+      # macchina dove si è già buildato una volta il file c'è, su un runner
+      # pulito no.
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.urls.outputs.base_path }}

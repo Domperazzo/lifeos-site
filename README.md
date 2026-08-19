@@ -13,7 +13,14 @@ npm install          # una volta
 npm run dev          # sviluppo su http://localhost:3000
 npm run build        # export statico in web/out
 npm run lint         # eslint (deve essere pulito)
+npx tsc --noEmit     # i tipi — solo **dopo** una build
 ```
+
+⚠️ `tsc --noEmit` su una copia appena clonata fallisce: le dichiarazioni
+per gli import di immagini stanno in `next-env.d.ts`, che Next *genera* e
+che non è versionato. Serve una `npm run build` prima. In CI non c'è un
+passo `tsc` separato proprio per questo — `next build` controlla già i
+tipi, ed è lui il cancello.
 
 Non c'è `npm run start`: con `output: "export"` la build non produce un
 server, produce una cartella. Per provarla come la servirà Pages:
