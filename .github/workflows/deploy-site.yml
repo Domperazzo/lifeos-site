@@ -1,0 +1,77 @@
+# Pubblica il sito su GitHub Pages.
+#
+# Questo file sta in `web/.github/` dentro il repository di LifeOS, dove
+# GitHub lo ignora — un workflow vale solo se sta in `.github/workflows/`
+# della radice. Ci arriva con `git subtree push`, che pubblica `web/` come
+# radice del repository pubblico: così la sorgente resta una sola.
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Il token serve a pubblicare su Pages e a provare l'identità del deploy.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Una pubblicazione alla volta. `cancel-in-progress: false` perché
+# interrompere un deploy a metà lascerebbe il sito in uno stato parziale.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Calcola gli indirizzi pubblici
+        id: urls
+        run: |
+          owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          repo=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
+          # Un repository chiamato <owner>.github.io è un "sito utente":
+          # sta sulla radice del dominio e non vuole nessun prefisso.
+          if [ "$repo" = "$owner.github.io" ]; then
+            echo "base_path=" >> "$GITHUB_OUTPUT"
+          else
+            echo "base_path=/${{ github.event.repository.name }}" >> "$GITHUB_OUTPUT"
+          fi
+          echo "origin=https://$owner.github.io" >> "$GITHUB_OUTPUT"
+
+      - run: npm ci
+
+      # Lint e tipi prima della build: un sito rotto non deve arrivare in
+      # pubblico solo perché `next build` è indulgente.
+      - run: npm run lint
+      - run: npx tsc --noEmit
+
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.urls.outputs.base_path }}
+          NEXT_PUBLIC_SITE_ORIGIN: ${{ steps.urls.outputs.origin }}
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

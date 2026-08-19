@@ -54,20 +54,40 @@ hooks/               media query, tema
 ## Pubblicazione
 
 Il sito è un **export statico** (`output: "export"` in `next.config.ts`) e
-va su GitHub Pages tramite `.github/workflows/deploy-site.yml`, che parte
-a ogni push su `main` che tocca `web/`.
+vive su GitHub Pages, nel repository **pubblico** `Domperazzo/lifeos-site`.
+L'app iOS resta privata.
 
-Due variabili decidono gli indirizzi, e il workflow le calcola da sé:
+La sorgente però è una sola: questa cartella. `lifeos-site` non è una
+copia da tenere allineata a mano — è **questa cartella pubblicata come
+radice**, con `git subtree`:
+
+```bash
+# dalla radice del repository LifeOS
+git subtree push --prefix=web lifeos-site main
+```
+
+Il push fa partire `.github/workflows/deploy-site.yml`, che builda e
+pubblica. Nel repository di LifeOS quel workflow sta in
+`web/.github/workflows/` — dove GitHub lo ignora, perché un workflow vale
+solo se sta nella radice: dopo il subtree ci finisce, ed è l'unico posto
+in cui deve girare.
+
+⚠️ **Non modificare `lifeos-site` direttamente.** Le modifiche si fanno
+qui e si pubblicano; il contrario costringe a un merge fra due storie che
+`subtree` non sa raccontare.
+
+Due variabili decidono gli indirizzi, e il workflow le calcola dal nome
+del repository:
 
 | Variabile | Cos'è | Esempio |
 |---|---|---|
-| `NEXT_PUBLIC_BASE_PATH` | la cartella sotto cui Pages pubblica | `/LifeOS` |
+| `NEXT_PUBLIC_BASE_PATH` | la cartella sotto cui Pages pubblica | `/lifeos-site` |
 | `NEXT_PUBLIC_SITE_ORIGIN` | schema e host, **senza** percorso | `https://domperazzo.github.io` |
 
 Sono lette in un posto solo, `lib/site.ts`. **Non metterle insieme**: Next
 antepone già `basePath` alle immagini dei metadata, quindi un
 `metadataBase` che contiene il prefisso produce
-`…/LifeOS/LifeOS/opengraph-image.png`. È già successo.
+`…/lifeos-site/lifeos-site/opengraph-image.png`. È già successo.
 
 `public/.nojekyll` non è un file dimenticato: senza, GitHub Pages passa
 tutto per Jekyll, che **ignora le cartelle che iniziano con `_`** — cioè
