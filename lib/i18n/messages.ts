@@ -372,6 +372,27 @@ export const italianMessages = {
     "Richiede iOS 18 o successivo. iPhone resta in verticale, iPad ruota.",
   "LifeOS on iPad, with the sidebar": "LifeOS su iPad, con la barra laterale",
   "Quick actions from your wrist.": "Azioni rapide dal polso.",
+
+  // Sezione Calendario
+  "August": "Agosto",
+  "4 things today": "4 cose oggi",
+  "Kitchen deep clean": "Pulizia a fondo della cucina",
+  "Laundry cycle ends": "Fine del ciclo di lavaggio",
+  "Mon": "Lun",
+  "Tue": "Mar",
+  "Wed": "Mer",
+  "Thu": "Gio",
+  "Fri": "Ven",
+  "Sat": "Sab",
+  "Sun": "Dom",
+  "Chores, appointments and deadlines, in one day.":
+    "Faccende, appuntamenti e scadenze, in una giornata sola.",
+  "Recent": "Recenti",
+  "Tomorrow": "Domani",
+  "Esselunga": "Esselunga",
+  "Groceries": "Spesa",
+  "Salary": "Stipendio",
+  "Trattoria da Nino": "Trattoria da Nino",
 } as const;
 
 export type MessageKey = keyof typeof italianMessages;

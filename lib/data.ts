@@ -162,6 +162,34 @@ export const scenarioActions = [
   "Cleaning task completed",
 ] as const;
 
+export const calendarDay = [
+  { time: "09:00", title: "Kitchen deep clean", area: "home" as AreaKey, duration: "45 min" },
+  { time: "13:30", title: "Pay electricity bill", area: "finance" as AreaKey, duration: "5 min" },
+  { time: "16:30", title: "Dentist", area: "family" as AreaKey, duration: "1 h" },
+  { time: "19:00", title: "Laundry cycle ends", area: "upkeep" as AreaKey, duration: "" },
+] as const;
+
+export const calendarWeek = [
+  { day: "Mon", date: 17, today: false, count: 2 },
+  { day: "Tue", date: 18, today: true, count: 4 },
+  { day: "Wed", date: 19, today: false, count: 1 },
+  { day: "Thu", date: 20, today: false, count: 3 },
+  { day: "Fri", date: 21, today: false, count: 0 },
+  { day: "Sat", date: 22, today: false, count: 2 },
+  { day: "Sun", date: 23, today: false, count: 1 },
+] as const;
+
+export const recentTransactions = [
+  { title: "Esselunga", meta: "Groceries", amount: -64, day: "Today" },
+  { title: "Salary", meta: "Main Account", amount: 2450, day: "17 Aug" },
+  { title: "Trattoria da Nino", meta: "Restaurants", amount: -38, day: "16 Aug" },
+] as const;
+
+export const tomorrowPlan = [
+  { time: "08:00", title: "Morning routine", area: "family" as AreaKey },
+  { time: "11:00", title: "Car maintenance", area: "upkeep" as AreaKey },
+] as const;
+
 export const roadmapAreas = [
   { title: "Apple Watch", detail: "Quick actions from your wrist." },
   { title: "Health", detail: "Sleep, activity and habits as a life area." },

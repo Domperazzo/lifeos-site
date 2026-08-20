@@ -93,7 +93,7 @@ export function TasksScreen({ withTabBar = true }: { withTabBar?: boolean }) {
           </div>
         </ScreenContent>
       </ScreenShell>
-      {withTabBar ? <TabBar active="tasks" tint="var(--area-goals)" /> : null}
+      {withTabBar ? <TabBar active="calendar" tint="var(--area-goals)" /> : null}
     </>
   );
 }

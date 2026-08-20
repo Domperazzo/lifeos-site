@@ -11,7 +11,6 @@ import { Devices } from "@/components/devices/Devices";
 import { AppleEcosystem } from "@/components/ecosystem/AppleEcosystem";
 import { Privacy } from "@/components/privacy/Privacy";
 import { Philosophy } from "@/components/philosophy/Philosophy";
-import { ProductDemo } from "@/components/product-demo/ProductDemo";
 import { Roadmap } from "@/components/roadmap/Roadmap";
 import { FinalCTA } from "@/components/cta/FinalCTA";
 import { Footer } from "@/components/footer/Footer";
@@ -40,7 +39,6 @@ export function HomePageContent() {
         <AppleEcosystem />
         <Privacy />
         <Philosophy />
-        <ProductDemo />
         <Roadmap />
         <FinalCTA />
       </main>

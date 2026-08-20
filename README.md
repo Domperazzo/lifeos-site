@@ -152,6 +152,23 @@ Nella sezione *Devices* i due device sono **alla stessa scala**: la
 larghezza del telefono è `calc(var(--pad-w) * 0.332)`, cioè 402/1210. Se
 si ingrandisse il telefono per far scena, la dimostrazione andrebbe persa.
 
+## La sezione *Devices*
+
+È l'unica interattiva del sito, e tiene **un solo stato** (`TabKey`) per
+due device: la barra laterale dell'iPad e la tab bar dell'iPhone leggono
+lo stesso valore. Nasce dalla fusione di *Devices* e della vecchia demo
+*Have a look around*: separate, la sincronia — che è l'argomento della
+sezione — non si poteva mostrare.
+
+Le cinque sezioni hanno i nomi veri dell'app: **Oggi · Casa · Patrimonio ·
+Calendario · Profilo** (`Section` in `RootView.swift`). ⚠️ Non
+reintrodurre "Life" o "Tasks": non esistono nell'app.
+
+I contenuti iPad stanno in `components/device/screens/ipad-content.tsx`,
+uno per sezione. Sono gli stessi dati dell'iPhone in una colonna più
+larga — dove il telefono mette due card per riga, qui ce ne stanno
+quattro.
+
 ## Il logo
 
 `components/ui/logo.tsx`: l'**icona vera dell'app** più il logotipo.

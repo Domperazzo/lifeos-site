@@ -123,7 +123,7 @@ export function LifeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
           </IOSCard>
         </ScreenContent>
       </ScreenShell>
-      {withTabBar ? <TabBar active="life" /> : null}
+      {withTabBar ? <TabBar active="today" /> : null}
     </>
   );
 }

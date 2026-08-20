@@ -5,13 +5,20 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 
-export type TabKey = "life" | "home" | "finance" | "tasks" | "profile";
+/*
+ * Le cinque sezioni dell'app, con i loro nomi veri. Il sito diceva
+ * "Life" e "Tasks", che nell'app non esistono: le sezioni sono Oggi,
+ * Casa, Patrimonio, Calendario, Profilo (`Section` in RootView.swift).
+ * Finché tab bar e barra laterale stavano in due sezioni diverse la
+ * differenza passava inosservata; affiancate, si vede.
+ */
+export type TabKey = "today" | "home" | "finance" | "calendar" | "profile";
 
 export const tabs: { key: TabKey; label: MessageKey; icon: typeof House }[] = [
-  { key: "life", label: "Life", icon: Sun },
+  { key: "today", label: "Today", icon: Sun },
   { key: "home", label: "Home", icon: House },
   { key: "finance", label: "Finance", icon: PieChart },
-  { key: "tasks", label: "Tasks", icon: CalendarDays },
+  { key: "calendar", label: "Calendar", icon: CalendarDays },
   { key: "profile", label: "Profile", icon: User },
 ];
 
