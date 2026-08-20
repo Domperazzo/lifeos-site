@@ -351,6 +351,27 @@ export const italianMessages = {
   "Natural language across every area.": "Linguaggio naturale in ogni area.",
   "Deeper automation": "Automazione avanzata",
   "More context, fewer decisions.": "Più contesto, meno decisioni.",
+
+  // Sezione Devices (iPhone e iPad)
+  "Devices": "Dispositivi",
+  "One app.": "Una sola app.",
+  "iPhone and iPad.": "iPhone e iPad.",
+  "LifeOS is a universal iOS app. Not an iPhone app blown up to fill a bigger screen — the layout changes because the screen changed.":
+    "LifeOS è un'app iOS universale. Non un'app per iPhone ingrandita per riempire uno schermo più grande: il layout cambia perché è cambiato lo schermo.",
+  "The sidebar isn't a stretched tab bar":
+    "La barra laterale non è una tab bar stirata",
+  "On a wide screen the five sections move into a sidebar. Narrow the window to a third and they become a tab bar again — LifeOS follows the size, not the name of the device.":
+    "Su schermo largo le cinque sezioni diventano una barra laterale. Stringi la finestra a un terzo e tornano una tab bar: LifeOS segue la misura, non il nome del dispositivo.",
+  "Text keeps a readable measure": "Il testo mantiene una misura leggibile",
+  "Content stops at 700 points and centres. A task and its time never end up half a metre apart, which is the reason typography has had a line length for five centuries.":
+    "Il contenuto si ferma a 700 punti e si centra. Un'attività e il suo orario non finiscono mai a mezzo metro di distanza: è la ragione per cui la tipografia ha una misura di riga da cinque secoli.",
+  "One app, not two": "Una sola app, non due",
+  "Same code, same data, same iCloud. Start something on the iPhone and finish it on the iPad — there is nothing to keep in sync between them.":
+    "Stesso codice, stessi dati, stesso iCloud. Inizi una cosa su iPhone e la finisci su iPad: fra i due non c'è niente da tenere allineato.",
+  "Requires iOS 18 or later. iPhone stays in portrait; iPad rotates.":
+    "Richiede iOS 18 o successivo. iPhone resta in verticale, iPad ruota.",
+  "LifeOS on iPad, with the sidebar": "LifeOS su iPad, con la barra laterale",
+  "Quick actions from your wrist.": "Azioni rapide dal polso.",
 } as const;
 
 export type MessageKey = keyof typeof italianMessages;

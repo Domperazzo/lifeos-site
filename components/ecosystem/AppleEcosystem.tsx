@@ -6,7 +6,6 @@ import { Reveal } from "@/components/ui/reveal";
 import { AnimatedIPhone } from "@/components/device/IPhoneMockup";
 import { TransactionScreen } from "@/components/device/screens/TransactionScreen";
 import { WidgetMockup } from "./WidgetMockup";
-import { WatchMockup } from "./WatchMockup";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
 export function AppleEcosystem() {
@@ -35,8 +34,8 @@ export function AppleEcosystem() {
         lead={t("Not a web app in a wrapper. LifeOS is a native iOS app that uses the parts of the system you already rely on.")}
       />
 
-      <div className="mt-14 grid gap-4 lg:grid-cols-3">
-        <Reveal className="card flex flex-col justify-between gap-6 p-6">
+      <div className="mt-14 grid gap-4 lg:grid-cols-2">
+        <Reveal className="card flex flex-col gap-6 p-6">
           <p className="text-[13px] font-medium text-ink-tertiary">{t("Home Screen widget")}</p>
           <WidgetMockup />
           <p className="text-[14px] leading-relaxed text-ink-secondary">
@@ -44,15 +43,7 @@ export function AppleEcosystem() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.08} className="card flex flex-col justify-between gap-6 p-6">
-          <p className="text-[13px] font-medium text-ink-tertiary">{t("Apple Watch")}</p>
-          <WatchMockup />
-          <p className="text-[14px] leading-relaxed text-ink-secondary">
-            {t("Three actions you take standing up: log an expense, tick a task, check the house.")}
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.16} className="card flex flex-col gap-5 p-6">
+        <Reveal delay={0.08} className="card flex flex-col gap-5 p-6">
           <p className="text-[13px] font-medium text-ink-tertiary">{t("Deeper in the system")}</p>
           <ul className="flex flex-col gap-5">
             {integrations.map((integration) => (

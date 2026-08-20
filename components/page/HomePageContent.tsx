@@ -7,6 +7,7 @@ import { AreasSection } from "@/components/features/AreasSection";
 import { ContextualIntelligence } from "@/components/intelligence/ContextualIntelligence";
 import { Automations } from "@/components/automations/Automations";
 import { AskLifeOS } from "@/components/ask-lifeos/AskLifeOS";
+import { Devices } from "@/components/devices/Devices";
 import { AppleEcosystem } from "@/components/ecosystem/AppleEcosystem";
 import { Privacy } from "@/components/privacy/Privacy";
 import { Philosophy } from "@/components/philosophy/Philosophy";
@@ -35,6 +36,7 @@ export function HomePageContent() {
         <ContextualIntelligence />
         <Automations />
         <AskLifeOS />
+        <Devices />
         <AppleEcosystem />
         <Privacy />
         <Philosophy />

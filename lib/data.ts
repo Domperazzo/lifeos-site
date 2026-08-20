@@ -163,6 +163,7 @@ export const scenarioActions = [
 ] as const;
 
 export const roadmapAreas = [
+  { title: "Apple Watch", detail: "Quick actions from your wrist." },
   { title: "Health", detail: "Sleep, activity and habits as a life area." },
   { title: "Mobility", detail: "Cars, servicing and running costs." },
   { title: "Travel", detail: "Trips connected to budget and home." },

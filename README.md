@@ -132,6 +132,26 @@ generate: un export statico le scriverebbe come file **senza estensione**,
 e Pages li servirebbe come `application/octet-stream` — nessun crawler
 accetta un'anteprima così.
 
+## I device nei mockup
+
+Due frame, un principio solo: `components/device/IPhoneMockup.tsx` e
+`components/device/IPadMockup.tsx`. Le misure sono quelle vere —
+402 × 874 punti per un iPhone 16 Pro, 1210 × 834 per un iPad Pro 11" in
+orizzontale — e tutto dentro è una frazione della larghezza del device,
+così il telefono regge a qualunque dimensione.
+
+La chiave è `--ref` in `.ios-screen`: è la larghezza del display **in
+punti**, e `--pt` ne discende. Un iPhone vale `--ref: 402`, un iPad
+`--ref: 1210` (classe `.ipad-screen`). Non è un dettaglio tecnico: è ciò
+che fa sì che 17pt siano *gli stessi* 17pt sui due device, e quindi che
+sull'iPad il testo occupi meno larghezza. È la differenza fra un'app
+universale e un iPhone stirato — la stessa che l'app ha risolto con
+`DS.Layout`.
+
+Nella sezione *Devices* i due device sono **alla stessa scala**: la
+larghezza del telefono è `calc(var(--pad-w) * 0.332)`, cioè 402/1210. Se
+si ingrandisse il telefono per far scena, la dimostrazione andrebbe persa.
+
 ## Il logo
 
 `components/ui/logo.tsx`: l'**icona vera dell'app** più il logotipo.

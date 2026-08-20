@@ -285,10 +285,20 @@
 @layer components {
   .ios-screen {
     container-type: inline-size;
-    --pt: calc(100cqw / 402);
+    /* `--ref` è la larghezza del display in punti: 402 per un iPhone 16
+       Pro, 1210 per un iPad Pro 11" in orizzontale. Non è un dettaglio
+       tecnico — è ciò che fa sì che 17pt siano *gli stessi* 17pt sui due
+       device, e quindi che sull'iPad il testo occupi meno larghezza. È la
+       differenza fra un'app universale e un iPhone stirato. */
+    --pt: calc(100cqw / var(--ref, 402));
     font-size: calc(17 * var(--pt));
     font-family: var(--font-sans);
     letter-spacing: -0.01em;
+  }
+
+  /* iPad Pro 11" in orizzontale. */
+  .ipad-screen {
+    --ref: 1210;
   }
 
   .ios-largetitle {

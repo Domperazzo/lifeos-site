@@ -1,13 +1,34 @@
-/** Status bar iOS: ora a sinistra, indicatori a destra, isola in mezzo. */
-export function StatusBar({ time = "9:41" }: { time?: string }) {
+/**
+ * Status bar iOS: ora a sinistra, indicatori a destra.
+ *
+ * Su iPhone è alta 59pt perché deve stare attorno alla Dynamic Island; su
+ * iPad non c'è isola da evitare e la barra è una fascia sottile. Sono due
+ * misure diverse dello stesso elemento, non due componenti.
+ */
+export function StatusBar({
+  time = "9:41",
+  variant = "iphone",
+}: {
+  time?: string;
+  variant?: "iphone" | "ipad";
+}) {
+  const iPad = variant === "ipad";
+
   return (
     <div
-      className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-[calc(var(--pt)*24)] text-ink"
-      style={{ height: "calc(var(--pt) * 59)", paddingTop: "calc(var(--pt) * 14)" }}
+      className="absolute inset-x-0 top-0 z-20 flex items-center justify-between text-ink"
+      style={{
+        height: `calc(var(--pt) * ${iPad ? 24 : 59})`,
+        paddingTop: iPad ? undefined : "calc(var(--pt) * 14)",
+        paddingInline: `calc(var(--pt) * ${iPad ? 34 : 24})`,
+      }}
     >
       <span
         className="font-semibold tabular"
-        style={{ fontSize: "calc(var(--pt) * 15)", letterSpacing: "-0.01em" }}
+        style={{
+          fontSize: `calc(var(--pt) * ${iPad ? 13 : 15})`,
+          letterSpacing: "-0.01em",
+        }}
       >
         {time}
       </span>
