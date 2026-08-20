@@ -11,6 +11,7 @@ import {
   ToolbarButton,
 } from "./ScreenShell";
 import { TabBar } from "../ios/TabBar";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 const tint: Record<string, string> = {
   home: "var(--area-home)",
@@ -21,6 +22,8 @@ const tint: Record<string, string> = {
 
 /** Oggi: solo ciò che chiede attenzione. Il fatto scende sotto, in piccolo. */
 export function TasksScreen({ withTabBar = true }: { withTabBar?: boolean }) {
+  const { t } = useI18n();
+
   return (
     <>
       <ScreenShell tint="var(--area-goals)">
@@ -31,7 +34,7 @@ export function TasksScreen({ withTabBar = true }: { withTabBar?: boolean }) {
           </ToolbarButton>
         </ScreenToolbar>
 
-        <ScreenTitle title="Today" subtitle="3 things need your attention" />
+        <ScreenTitle title={t("Today")} subtitle={t("3 things need your attention")} />
 
         <ScreenContent gap={10}>
           {todayTasks.map((task) => (
@@ -50,19 +53,19 @@ export function TasksScreen({ withTabBar = true }: { withTabBar?: boolean }) {
                 }}
               />
               <div className="flex-1">
-                <p className="ios-subhead">{task.title}</p>
+                <p className="ios-subhead">{t(task.title)}</p>
                 <p
                   className="ios-caption"
                   style={{ color: task.urgent ? "var(--area-wellbeing)" : undefined }}
                 >
-                  <span className={task.urgent ? "" : "text-ink-tertiary"}>{task.meta}</span>
+                  <span className={task.urgent ? "" : "text-ink-tertiary"}>{t(task.meta)}</span>
                 </p>
               </div>
             </IOSCard>
           ))}
 
           <div style={{ paddingTop: "calc(var(--pt) * 6)" }}>
-            <IOSSectionTitle>Done today</IOSSectionTitle>
+            <IOSSectionTitle>{t("Done today")}</IOSSectionTitle>
           </div>
 
           <div className="flex flex-col" style={{ gap: "calc(var(--pt) * 6)" }}>
@@ -83,7 +86,7 @@ export function TasksScreen({ withTabBar = true }: { withTabBar?: boolean }) {
                 >
                   <Check style={{ width: "calc(var(--pt) * 11)" }} strokeWidth={3} />
                 </span>
-                <p className="ios-footnote flex-1 line-through">{task.title}</p>
+                <p className="ios-footnote flex-1 line-through">{t(task.title)}</p>
                 <p className="ios-caption text-ink-tertiary tabular">{task.meta}</p>
               </div>
             ))}

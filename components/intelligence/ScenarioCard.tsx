@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Check } from "lucide-react";
 import { scenarioActions } from "@/lib/data";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /**
  * Lo scenario: un'ora, un fatto, e le conseguenze che compaiono una dopo
@@ -11,6 +12,7 @@ import { scenarioActions } from "@/lib/data";
  */
 export function ScenarioCard() {
   const reduceMotion = useReducedMotion();
+  const { t } = useI18n();
 
   return (
     <motion.div
@@ -22,16 +24,15 @@ export function ScenarioCard() {
     >
       <div className="flex items-baseline gap-3">
         <span className="tabular text-[15px] font-semibold">08:15</span>
-        <span className="text-[13px] text-ink-tertiary">Tuesday morning</span>
+        <span className="text-[13px] text-ink-tertiary">{t("Tuesday morning")}</span>
       </div>
 
       <p className="mt-4 text-[clamp(1.25rem,2.6vw,1.6rem)] font-semibold leading-snug tracking-[-0.02em]">
-        Federico and Luna left home.
+        {t("Federico and Luna left home.")}
       </p>
 
       <p className="mt-3 max-w-sm text-[14.5px] leading-relaxed text-ink-secondary">
-        Nobody is in. Nothing is booked before 16:30. The living room is behind
-        on cleaning. LifeOS puts those three facts together.
+        {t("Nobody is in. Nothing is booked before 16:30. The living room is behind on cleaning. LifeOS puts those three facts together.")}
       </p>
 
       <ul className="mt-7 flex flex-col gap-2.5">
@@ -47,13 +48,13 @@ export function ScenarioCard() {
             <span className="grid size-5 shrink-0 place-items-center rounded-full bg-finance text-white">
               <Check className="size-3" strokeWidth={3.2} />
             </span>
-            <span className="text-[14.5px]">{action}</span>
+            <span className="text-[14.5px]">{t(action)}</span>
           </motion.li>
         ))}
       </ul>
 
       <p className="mt-6 text-[13px] text-ink-tertiary">
-        Every automated action is logged, and can be undone.
+        {t("Every automated action is logged, and can be undone.")}
       </p>
     </motion.div>
   );

@@ -2,10 +2,12 @@
 
 import { CalendarDays, House, PieChart, Sun, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/i18n/I18nProvider";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 export type TabKey = "life" | "home" | "finance" | "tasks" | "profile";
 
-export const tabs: { key: TabKey; label: string; icon: typeof House }[] = [
+export const tabs: { key: TabKey; label: MessageKey; icon: typeof House }[] = [
   { key: "life", label: "Life", icon: Sun },
   { key: "home", label: "Home", icon: House },
   { key: "finance", label: "Finance", icon: PieChart },
@@ -28,6 +30,7 @@ export function TabBar({
   tint?: string;
 }) {
   const interactive = Boolean(onSelect);
+  const { t } = useI18n();
 
   return (
     <div
@@ -76,7 +79,7 @@ export function TabBar({
                 style={{ width: "calc(var(--pt) * 20)", height: "calc(var(--pt) * 20)" }}
                 strokeWidth={isActive ? 2.3 : 1.9}
               />
-              <span className="ios-caption">{label}</span>
+              <span className="ios-caption">{t(label)}</span>
             </Element>
           );
         })}

@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { contextChain } from "@/lib/data";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /**
  * Le fonti che LifeOS legge, una sotto l'altra, unite da una linea che
@@ -11,6 +12,7 @@ import { contextChain } from "@/lib/data";
  */
 export function ContextChain() {
   const reduceMotion = useReducedMotion();
+  const { t } = useI18n();
 
   return (
     // `self-start`: senza, la colonna si stira per pareggiare la card
@@ -38,8 +40,8 @@ export function ContextChain() {
             className="relative flex items-baseline gap-4 pl-8"
           >
             <span className="absolute left-0 top-1.5 size-[15px] rounded-full border-2 border-line-strong bg-bg" />
-            <span className="w-[5.5rem] shrink-0 text-[15px] font-medium">{source.label}</span>
-            <span className="text-[14px] text-ink-tertiary">{source.note}</span>
+            <span className="w-[5.5rem] shrink-0 text-[15px] font-medium">{t(source.label)}</span>
+            <span className="text-[14px] text-ink-tertiary">{t(source.note)}</span>
           </motion.li>
         ))}
       </ul>
@@ -60,7 +62,7 @@ export function ContextChain() {
         <div>
           <p className="text-[15px] font-semibold">LifeOS</p>
           <p className="text-[13.5px] text-ink-secondary">
-            Reads all five together, then decides what to do.
+            {t("Reads all five together, then decides what to do.")}
           </p>
         </div>
       </motion.div>

@@ -3,6 +3,7 @@
 import { useId, useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { CountUp } from "./count-up";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /**
  * L'anello del Life Score in versione web: stessa gradazione dell'app,
@@ -13,7 +14,7 @@ export function ScoreRing({
   value,
   size = 168,
   stroke = 13,
-  label = "Life Score",
+  label,
 }: {
   value: number;
   size?: number;
@@ -24,6 +25,7 @@ export function ScoreRing({
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-15% 0px" });
   const reduceMotion = useReducedMotion();
+  const { t } = useI18n();
 
   const radius = 50 - stroke / 2;
   const circumference = 2 * Math.PI * radius;
@@ -72,7 +74,7 @@ export function ScoreRing({
             %
           </span>
         </span>
-        <span className="mt-2 text-[12px] font-medium text-ink-tertiary">{label}</span>
+        <span className="mt-2 text-[12px] font-medium text-ink-tertiary">{label ?? t("Life Score")}</span>
       </div>
     </div>
   );

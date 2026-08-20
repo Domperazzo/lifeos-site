@@ -3,8 +3,10 @@ import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { themeInitScript } from "@/lib/theme-store";
+import { localeInitScript } from "@/lib/i18n/config";
 import {
   canonicalPath,
+  italianCanonicalPath,
   siteDescription,
   siteOrigin,
   siteTitle,
@@ -33,14 +35,18 @@ export const metadata: Metadata = {
     "iOS app",
   ],
   authors: [{ name: "LifeOS" }],
-  alternates: { canonical: canonicalPath },
+  alternates: {
+    canonical: canonicalPath,
+    languages: { en: canonicalPath, it: italianCanonicalPath },
+  },
   openGraph: {
     type: "website",
     url: canonicalPath,
     siteName: "LifeOS",
     title: siteTitle,
     description: siteDescription,
-    locale: "en",
+    locale: "en_US",
+    alternateLocale: ["it_IT"],
   },
   twitter: {
     card: "summary_large_image",
@@ -68,6 +74,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           id="lifeos-theme"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+        <Script
+          id="lifeos-locale"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: localeInitScript }}
         />
       </head>
       <body className={inter.variable}>{children}</body>

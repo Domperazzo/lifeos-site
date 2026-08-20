@@ -1,3 +1,7 @@
+import type { Locale } from "@/lib/i18n/config";
+import type { MessageKey, Translate } from "@/lib/i18n/messages";
+import { formatEUR } from "@/lib/utils";
+
 /**
  * Dati dimostrativi del sito.
  *
@@ -31,9 +35,9 @@ export const areaColor: Record<AreaKey, string> = {
 
 export const lifeAreas: {
   key: AreaKey;
-  label: string;
+  label: MessageKey;
   score: number;
-  detail: string;
+  detail: MessageKey;
 }[] = [
   { key: "home", label: "Home", score: 92, detail: "4 tasks today" },
   { key: "finance", label: "Finance", score: 88, detail: "On budget" },
@@ -46,7 +50,7 @@ export const rooms = [
   { name: "Bathroom", cleanliness: 85, tint: "#25b8c9" },
   { name: "Living Room", cleanliness: 100, tint: "#6c63e0" },
   { name: "Laundry", cleanliness: 70, tint: "#3e93e8" },
-];
+] as const;
 
 export const accounts = [
   { name: "Accounts", amount: 14_230, tint: "var(--area-home)", icon: "wallet" },
@@ -60,21 +64,21 @@ export const netWorthSeries = [
 
 export const todayTasks = [
   { title: "Pay electricity bill", meta: "Due today", area: "finance" as AreaKey, urgent: true },
-  { title: "Car maintenance", meta: "Schedule this week", area: "upkeep" as AreaKey },
-  { title: "Clean bedroom", meta: "15 min", area: "home" as AreaKey },
-];
+  { title: "Car maintenance", meta: "Schedule this week", area: "upkeep" as AreaKey, urgent: false },
+  { title: "Clean bedroom", meta: "15 min", area: "home" as AreaKey, urgent: false },
+] as const;
 
 export const doneTasks = [
   { title: "Morning routine", meta: "07:20" },
   { title: "Kitchen surfaces", meta: "09:05" },
-];
+] as const;
 
 export const automationTimeline = [
   { time: "07:00", title: "Morning routine started", detail: "Blinds up · Coffee plug on", area: "family" as AreaKey },
   { time: "08:15", title: "Everyone left home", detail: "Away mode · Vacuum started", area: "home" as AreaKey },
   { time: "18:30", title: "Arriving home", detail: "Heating adjusted to 21°", area: "upkeep" as AreaKey },
   { time: "21:00", title: "Tomorrow prepared", detail: "3 priorities selected", area: "goals" as AreaKey },
-];
+] as const;
 
 export interface AskExample {
   question: string;
@@ -90,10 +94,20 @@ export interface AskExample {
   ordered?: boolean;
 }
 
-export const askExamples: AskExample[] = [
+interface AskExampleTemplate {
+  question: MessageKey;
+  answer: MessageKey | number;
+  detail: MessageKey;
+  source: MessageKey;
+  comparison?: { label: MessageKey; value: number; previous: number };
+  items?: MessageKey[];
+  ordered?: boolean;
+}
+
+const askExampleTemplates: AskExampleTemplate[] = [
   {
     question: "How much did I spend eating out this month?",
-    answer: "€184",
+    answer: 184,
     detail: "That's 12% less than last month.",
     source: "From 14 transactions · 1–18 August",
     comparison: { label: "Restaurants", value: 184, previous: 209 },
@@ -119,20 +133,34 @@ export const askExamples: AskExample[] = [
   },
 ];
 
+export function getAskExamples(t: Translate, locale: Locale): AskExample[] {
+  return askExampleTemplates.map((example) => ({
+    question: t(example.question),
+    answer: typeof example.answer === "number" ? formatEUR(example.answer, false, locale) : t(example.answer),
+    detail: t(example.detail),
+    source: t(example.source),
+    comparison: example.comparison
+      ? { ...example.comparison, label: t(example.comparison.label) }
+      : undefined,
+    items: example.items?.map((item) => t(item)),
+    ordered: example.ordered,
+  }));
+}
+
 export const contextChain = [
   { label: "Calendar", note: "Nothing until 16:30" },
   { label: "Location", note: "Both away" },
   { label: "Home", note: "Living room at 70%" },
   { label: "Tasks", note: "Vacuum is due" },
   { label: "Finances", note: "Bill due in 2 days" },
-];
+] as const;
 
 export const scenarioActions = [
   "Home set to Away",
   "Robot vacuum started",
   "Heating reduced",
   "Cleaning task completed",
-];
+] as const;
 
 export const roadmapAreas = [
   { title: "Health", detail: "Sleep, activity and habits as a life area." },
@@ -141,4 +169,4 @@ export const roadmapAreas = [
   { title: "Documents", detail: "Warranties, contracts and expiries." },
   { title: "Assistant", detail: "Natural language across every area." },
   { title: "Deeper automation", detail: "More context, fewer decisions." },
-];
+] as const;

@@ -1,4 +1,7 @@
+"use client";
+
 import { AppIcon } from "@/components/ui/logo";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /**
  * Un widget medio della schermata Home (338 × 158 pt).
@@ -7,6 +10,8 @@ import { AppIcon } from "@/components/ui/logo";
  * niente. Per questo mostra tre stati e nessun pulsante.
  */
 export function WidgetMockup() {
+  const { t } = useI18n();
+
   return (
     <div
       className="relative overflow-hidden rounded-[26px] p-5 shadow-[var(--shadow-md)]"
@@ -32,19 +37,19 @@ export function WidgetMockup() {
 
         <div className="flex items-end justify-between">
           <div>
-            <p className="text-[11px] text-ink-tertiary">Life Score</p>
+            <p className="text-[11px] text-ink-tertiary">{t("Life Score")}</p>
             <p className="tabular text-[30px] font-semibold leading-none tracking-[-0.03em]">
               86<span className="text-[16px] text-ink-tertiary">%</span>
             </p>
           </div>
           <div className="flex flex-col gap-2 text-right">
             <div>
-              <p className="text-[11px] text-ink-tertiary">Home</p>
-              <p className="text-[13px] font-medium">All good</p>
+              <p className="text-[11px] text-ink-tertiary">{t("Home")}</p>
+              <p className="text-[13px] font-medium">{t("All good")}</p>
             </div>
             <div>
-              <p className="text-[11px] text-ink-tertiary">Today</p>
-              <p className="text-[13px] font-medium">2 priorities</p>
+              <p className="text-[11px] text-ink-tertiary">{t("Today")}</p>
+              <p className="text-[13px] font-medium">{t("2 priorities")}</p>
             </div>
           </div>
         </div>

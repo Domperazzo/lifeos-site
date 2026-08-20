@@ -9,6 +9,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { areaColor, automationTimeline } from "@/lib/data";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /**
  * La giornata come timeline.
@@ -21,6 +22,7 @@ import { areaColor, automationTimeline } from "@/lib/data";
  */
 export function AutomationTimeline() {
   const ref = useRef<HTMLOListElement>(null);
+  const { t } = useI18n();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -36,6 +38,8 @@ export function AutomationTimeline() {
           index={index}
           total={automationTimeline.length}
           progress={scrollYProgress}
+          title={t(event.title)}
+          detail={t(event.detail)}
         />
       ))}
     </ol>
@@ -47,11 +51,15 @@ function TimelineEvent({
   index,
   total,
   progress,
+  title,
+  detail,
 }: {
   event: (typeof automationTimeline)[number];
   index: number;
   total: number;
   progress: MotionValue<number>;
+  title: string;
+  detail: string;
 }) {
   const reduceMotion = useReducedMotion();
   const isLast = index === total - 1;
@@ -95,8 +103,8 @@ function TimelineEvent({
           {event.time}
         </span>
         <span>
-          <span className="block text-[16.5px] font-medium">{event.title}</span>
-          <span className="mt-1 block text-[14px] text-ink-secondary">{event.detail}</span>
+          <span className="block text-[16.5px] font-medium">{title}</span>
+          <span className="mt-1 block text-[14px] text-ink-secondary">{detail}</span>
         </span>
       </div>
     </motion.li>

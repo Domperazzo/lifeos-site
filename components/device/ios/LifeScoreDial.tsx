@@ -1,6 +1,7 @@
 "use client";
 
 import { useId } from "react";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /**
  * L'anello del Life Score, come in `LifeScoreDial.swift`: traccia neutra,
@@ -12,7 +13,7 @@ export function LifeScoreDial({
   value,
   size = 78,
   stroke = 8,
-  caption = "Life Score",
+  caption,
 }: {
   value: number;
   size?: number;
@@ -20,6 +21,7 @@ export function LifeScoreDial({
   caption?: string;
 }) {
   const gradientId = useId();
+  const { t } = useI18n();
   const radius = 50 - stroke / 2;
   const circumference = 2 * Math.PI * radius;
   const clamped = Math.max(0, Math.min(100, value));
@@ -69,7 +71,7 @@ export function LifeScoreDial({
           className="text-ink-tertiary"
           style={{ fontSize: `calc(var(--pt) * ${size * 0.105})`, marginTop: "calc(var(--pt) * 3)" }}
         >
-          {caption}
+          {caption ?? t("Life Score")}
         </span>
       </span>
     </div>

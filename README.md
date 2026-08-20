@@ -37,6 +37,8 @@ configurazione `.claude/launch.json` (`lifeos-web`).
 ```
 app/                 layout, pagina, metadata, sitemap, robots, og-image
 components/
+  i18n/              provider tipizzato + selettore EN/IT
+  page/              composizione condivisa delle pagine localizzate
   navigation/        navbar sticky
   hero/              hero + composizione a tre iPhone
   device/            IPhoneMockup e le schermate LifeOS
@@ -54,9 +56,34 @@ components/
   product-demo/      iPhone interattivo con tab bar vera
   roadmap/ cta/ footer/
   theme/ ui/         toggle del tema e primitive comuni
-lib/                 dati dimostrativi, formattazione, store del tema
+lib/                 dati dimostrativi, formattazione, i18n, store del tema
 hooks/               media query, tema
 ```
+
+## Lingue
+
+Il sito è disponibile in due export statici:
+
+- `/` in inglese;
+- `/it/` in italiano.
+
+Il selettore **EN / IT** è sempre visibile nella barra di navigazione,
+anche su mobile. La route è l'unica fonte della lingua: non si usano cookie
+o `localStorage`, quindi link, metadata, indicizzazione e primo render sono
+deterministici anche su GitHub Pages. `layout.tsx` allinea l'attributo
+`lang` prima del primo paint, mentre ogni pagina passa il proprio locale a
+`I18nProvider`.
+
+Il catalogo vive in `lib/i18n/messages.ts`. L'inglese è la chiave canonica
+e `MessageKey` obbliga ogni testo visibile — inclusi quelli delle schermate
+nei mockup — ad avere una traduzione italiana. Anche i dati dimostrativi in
+`lib/data.ts` usano le stesse chiavi; date, importi e separatori decimali
+sono formattati in base alla lingua.
+
+Per aggiungere una nuova lingua servono una route statica, il locale in
+`lib/i18n/config.ts`, il relativo catalogo e i metadata/alternate URL. Per
+aggiungere invece un testo basta inserirlo nel catalogo e renderizzarlo con
+`t(...)`: TypeScript segnala chiavi mancanti o improvvisate.
 
 ## Pubblicazione
 

@@ -1,12 +1,15 @@
+"use client";
+
 import { Check, X } from "lucide-react";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /*
   Ogni affermazione qui è verificabile nel codice dell'app.
   Riferimenti: docs/LifeCloud_Privacy_Model.md §1-§3, §9, §11.
 */
-const principles = [
+const principleKeys = [
   {
     title: "There is no LifeOS server",
     detail:
@@ -37,30 +40,38 @@ const principles = [
     detail:
       "Files on disk use iOS data protection, so they stay encrypted until you first unlock your iPhone after a restart.",
   },
-];
+] as const;
 
-const shared = [
+const sharedKeys = [
   "The home and its rooms",
   "Chores and who did them",
   "The cleaning schedule",
   "How much time each person has",
-];
+] as const;
 
-const neverShared = [
+const neverSharedKeys = [
   "Accounts and balances",
   "Net worth and investments",
   "Income and personal goals",
   "Wellbeing, notes, private routines",
   "Work shifts and observed habits",
-];
+] as const;
 
 export function Privacy() {
+  const { t } = useI18n();
+  const principles = principleKeys.map((principle) => ({
+    title: t(principle.title),
+    detail: t(principle.detail),
+  }));
+  const shared = sharedKeys.map((item) => t(item));
+  const neverShared = neverSharedKeys.map((item) => t(item));
+
   return (
     <Section id="security">
       <SectionHeading
-        eyebrow="Privacy"
-        title="Your life belongs to you."
-        lead="LifeOS holds some of the most personal data a person has. That makes privacy an architectural decision, not a settings screen — so it is enforced in the code, and covered by tests."
+        eyebrow={t("Privacy")}
+        title={t("Your life belongs to you.")}
+        lead={t("LifeOS holds some of the most personal data a person has. That makes privacy an architectural decision, not a settings screen — so it is enforced in the code, and covered by tests.")}
       />
 
       <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -79,7 +90,7 @@ export function Privacy() {
       <Reveal className="mt-4 grid gap-8 rounded-[24px] border border-line bg-surface p-6 sm:p-10 lg:grid-cols-2 lg:gap-16">
         <div>
           <p className="text-[13px] font-medium text-ink-tertiary">
-            What the people you share a home with see
+            {t("What the people you share a home with see")}
           </p>
           <ul className="mt-5 flex flex-col gap-3">
             {shared.map((item) => (
@@ -94,7 +105,7 @@ export function Privacy() {
         </div>
 
         <div>
-          <p className="text-[13px] font-medium text-ink-tertiary">What they never see</p>
+          <p className="text-[13px] font-medium text-ink-tertiary">{t("What they never see")}</p>
           <ul className="mt-5 flex flex-col gap-3">
             {neverShared.map((item) => (
               <li key={item} className="flex items-center gap-3 text-[15px]">
@@ -106,8 +117,7 @@ export function Privacy() {
             ))}
           </ul>
           <p className="mt-6 text-[13px] leading-relaxed text-ink-tertiary">
-            This boundary is verified end to end by an automated test across two
-            devices — not by a promise on a marketing page.
+            {t("This boundary is verified end to end by an automated test across two devices — not by a promise on a marketing page.")}
           </p>
         </div>
       </Reveal>

@@ -9,6 +9,7 @@ import { HomeScreen } from "@/components/device/screens/HomeScreen";
 import { FinanceScreen } from "@/components/device/screens/FinanceScreen";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { reducedTransition } from "@/components/ui/reveal";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /**
  * I tre telefoni del hero.
@@ -22,6 +23,7 @@ export function HeroDevices() {
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const { t } = useI18n();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -58,7 +60,7 @@ export function HeroDevices() {
           <IPhoneMockup
             width="clamp(210px, 20vw, 254px)"
             time="8:15"
-            label="LifeOS Home screen on iPhone"
+            label={t("LifeOS Home screen on iPhone")}
           >
             <HomeScreen />
           </IPhoneMockup>
@@ -74,7 +76,7 @@ export function HeroDevices() {
         <IPhoneMockup
           width="clamp(248px, 30vw, 314px)"
           time="9:41"
-          label="LifeOS daily dashboard on iPhone"
+          label={t("LifeOS daily dashboard on iPhone")}
         >
           <LifeScreen />
         </IPhoneMockup>
@@ -90,7 +92,7 @@ export function HeroDevices() {
           <IPhoneMockup
             width="clamp(210px, 20vw, 254px)"
             time="9:41"
-            label="LifeOS Finance screen on iPhone"
+            label={t("LifeOS Finance screen on iPhone")}
           >
             <FinanceScreen />
           </IPhoneMockup>
@@ -108,24 +110,24 @@ export function HeroDevices() {
             delay={1.05}
             icon={<House className="size-3.5" />}
             tint="var(--area-home)"
-            title="Home secure"
-            detail="Everything under control"
+            title={t("Home secure")}
+            detail={t("Everything under control")}
           />
           <FloatingChip
             className="right-[1%] top-[38%]"
             delay={1.2}
             icon={<TrendingUp className="size-3.5" />}
             tint="var(--area-finance)"
-            title="Net worth"
-            detail="+2.4% this month"
+            title={t("Net worth")}
+            detail={t("+2.4% this month")}
           />
           <FloatingChip
             className="bottom-[12%] left-[6%]"
             delay={1.35}
             icon={<CheckCircle2 className="size-3.5" />}
             tint="var(--area-goals)"
-            title="Vacuum started"
-            detail="Nobody home · 08:15"
+            title={t("Vacuum started")}
+            detail={t("Nobody home · 08:15")}
           />
         </motion.div>
       ) : null}

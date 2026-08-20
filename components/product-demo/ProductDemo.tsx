@@ -10,6 +10,8 @@ import { FinanceScreen } from "@/components/device/screens/FinanceScreen";
 import { TasksScreen } from "@/components/device/screens/TasksScreen";
 import { ProfileScreen } from "@/components/device/screens/ProfileScreen";
 import { SectionHeading } from "@/components/ui/section";
+import { useI18n } from "@/components/i18n/I18nProvider";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 const screens: Record<TabKey, React.ReactNode> = {
   life: <LifeScreen withTabBar={false} />,
@@ -27,7 +29,7 @@ const tints: Record<TabKey, string> = {
   profile: "var(--area-family)",
 };
 
-const captions: Record<TabKey, string> = {
+const captions: Record<TabKey, MessageKey> = {
   life: "The day, read across every area at once.",
   home: "Six rooms, and only what is behind.",
   finance: "One number, and what it is made of.",
@@ -42,6 +44,7 @@ const captions: Record<TabKey, string> = {
 export function ProductDemo() {
   const [active, setActive] = useState<TabKey>("life");
   const reduceMotion = useReducedMotion();
+  const { t } = useI18n();
 
   return (
     <section className="relative overflow-hidden px-5 py-24 sm:px-8 sm:py-32">
@@ -52,9 +55,9 @@ export function ProductDemo() {
       <div className="mx-auto w-full max-w-6xl">
         <SectionHeading
           align="center"
-          eyebrow="Product"
-          title="Have a look around."
-          lead="Tap through the app. Everything here is demonstration data, laid out exactly as LifeOS lays it out."
+          eyebrow={t("Product")}
+          title={t("Have a look around.")}
+          lead={t("Tap through the app. Everything here is demonstration data, laid out exactly as LifeOS lays it out.")}
         />
 
         <div className="mt-14 flex flex-col items-center gap-8">
@@ -77,7 +80,7 @@ export function ProductDemo() {
                   color: active === tab.key ? tints[tab.key] : "var(--text-secondary)",
                 }}
               >
-                {tab.label}
+                {t(tab.label)}
               </button>
             ))}
           </div>
@@ -85,7 +88,7 @@ export function ProductDemo() {
           <IPhoneMockup
             interactive
             width="clamp(250px, 74vw, 320px)"
-            label={`LifeOS — ${active} screen`}
+            label={t("LifeOS — {screen} screen", { screen: t(tabs.find((tab) => tab.key === active)?.label ?? "Life") })}
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -111,7 +114,7 @@ export function ProductDemo() {
               transition={{ duration: 0.24 }}
               className="text-center text-[14.5px] text-ink-tertiary"
             >
-              {captions[active]}
+              {t(captions[active])}
             </motion.p>
           </AnimatePresence>
         </div>

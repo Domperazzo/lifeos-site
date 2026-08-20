@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/site";
+import { italianSiteUrl, siteUrl } from "@/lib/site";
 
 /*
  * `force-static`: con `output: "export"` non c'è un server che possa
@@ -9,12 +9,13 @@ import { siteUrl } from "@/lib/site";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: siteUrl,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-  ];
+  const languages = { en: siteUrl, it: italianSiteUrl };
+
+  return [siteUrl, italianSiteUrl].map((url) => ({
+    url,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: url === siteUrl ? 1 : 0.9,
+    alternates: { languages },
+  }));
 }

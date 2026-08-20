@@ -20,9 +20,18 @@ export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const canonicalPath = `${basePath}/`;
 
+export const italianCanonicalPath = `${basePath}/it/`;
+
 export const siteUrl = `${siteOrigin}${canonicalPath}`;
+
+export const italianSiteUrl = `${siteOrigin}${italianCanonicalPath}`;
 
 export const siteDescription =
   "LifeOS brings your home, finances, routines and priorities into one intelligent system designed to help you stay in control of your life.";
 
 export const siteTitle = "LifeOS — Your Life. One Operating System.";
+
+export const italianSiteDescription =
+  "LifeOS riunisce casa, patrimonio, routine e priorità in un unico sistema intelligente progettato per aiutarti a mantenere il controllo della tua vita.";
+
+export const italianSiteTitle = "LifeOS — La tua vita. Un solo sistema operativo.";

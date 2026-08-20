@@ -1,36 +1,40 @@
+"use client";
+
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
-
-const columns = [
-  {
-    title: "Product",
-    links: [
-      { label: "Overview", href: "#product" },
-      { label: "Features", href: "#features" },
-      { label: "How it works", href: "#how-it-works" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "#about" },
-      { label: "Security", href: "#security" },
-      { label: "Contact", href: "mailto:hello@lifeos.app" },
-    ],
-  },
-];
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 export function Footer() {
+  const { t } = useI18n();
+  const columns = [
+    {
+      title: t("Product"),
+      links: [
+        { label: t("Overview"), href: "#product" },
+        { label: t("Features"), href: "#features" },
+        { label: t("How it works"), href: "#how-it-works" },
+      ],
+    },
+    {
+      title: t("Company"),
+      links: [
+        { label: t("About"), href: "#about" },
+        { label: t("Security"), href: "#security" },
+        { label: t("Contact"), href: "mailto:hello@lifeos.app" },
+      ],
+    },
+  ];
+
   return (
     <footer className="border-t border-line px-5 py-14 sm:px-8">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
         <div className="flex flex-col gap-10 sm:flex-row sm:justify-between">
           <div className="flex flex-col gap-3">
-            <Link href="#top" aria-label="LifeOS, home" className="text-[18px]">
+            <Link href="#top" aria-label={t("LifeOS, home")} className="text-[18px]">
               <Logo iconSize={26} />
             </Link>
             <p className="max-w-xs text-[13.5px] leading-relaxed text-ink-tertiary">
-              The personal operating system for your life, home and money.
+              {t("The personal operating system for your life, home and money.")}
             </p>
           </div>
 
@@ -53,8 +57,8 @@ export function Footer() {
               </nav>
             ))}
 
-            <nav aria-label="Social" className="flex flex-col gap-3">
-              <p className="text-[13px] font-medium text-ink">Elsewhere</p>
+            <nav aria-label={t("Social")} className="flex flex-col gap-3">
+              <p className="text-[13px] font-medium text-ink">{t("Elsewhere")}</p>
               <ul className="flex flex-col gap-2.5">
                 <li>
                   <a
@@ -82,8 +86,8 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-2 border-t border-line pt-8 text-[12.5px] text-ink-tertiary sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} LifeOS. All rights reserved.</p>
-          <p>Designed and built for iOS.</p>
+          <p>© {new Date().getFullYear()} LifeOS. {t("All rights reserved.")}</p>
+          <p>{t("Designed and built for iOS.")}</p>
         </div>
       </div>
     </footer>

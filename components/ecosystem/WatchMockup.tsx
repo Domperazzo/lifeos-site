@@ -1,16 +1,20 @@
-import { Check, House, Plus } from "lucide-react";
+"use client";
 
-const actions = [
-  { label: "Add expense", icon: Plus, tint: "var(--area-finance)" },
-  { label: "Complete task", icon: Check, tint: "var(--area-goals)" },
-  { label: "Home status", icon: House, tint: "var(--area-home)" },
-];
+import { Check, House, Plus } from "lucide-react";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /**
  * Apple Watch: le tre cose che si fanno da fermi, senza tirare fuori il
  * telefono. Il quadrante non ripete la dashboard — sarebbe illeggibile.
  */
 export function WatchMockup() {
+  const { t } = useI18n();
+  const actions = [
+    { label: t("Add expense"), icon: Plus, tint: "var(--area-finance)" },
+    { label: t("Complete task"), icon: Check, tint: "var(--area-goals)" },
+    { label: t("Home status"), icon: House, tint: "var(--area-home)" },
+  ];
+
   return (
     <div className="relative mx-auto" style={{ width: "clamp(126px, 30vw, 152px)" }}>
       {/* Cassa */}

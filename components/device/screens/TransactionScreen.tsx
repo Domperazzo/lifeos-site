@@ -2,18 +2,22 @@
 
 import { Chevron } from "../ios/primitives";
 import { ScreenShell } from "./ScreenShell";
+import { useI18n } from "@/components/i18n/I18nProvider";
+import { formatEUR } from "@/lib/utils";
 
 const fields = [
   { label: "Account", value: "Main Account" },
   { label: "Category", value: "Restaurants" },
   { label: "Date", value: "Today" },
-];
+] as const;
 
 /**
  * Il foglio di una nuova transazione — quello che Siri compila da sola
  * quando le detti «Log 25 euros for dinner».
  */
 export function TransactionScreen() {
+  const { locale, t } = useI18n();
+
   return (
     <ScreenShell tint="var(--area-finance)" bottomPadding={36}>
       {/* Maniglia del foglio modale. */}
@@ -31,10 +35,10 @@ export function TransactionScreen() {
         className="ios-gutter flex items-center justify-between"
         style={{ marginTop: "calc(var(--pt) * 16)" }}
       >
-        <span className="ios-subhead text-ink-tertiary">Cancel</span>
-        <span className="ios-headline">New Transaction</span>
+        <span className="ios-subhead text-ink-tertiary">{t("Cancel")}</span>
+        <span className="ios-headline">{t("New Transaction")}</span>
         <span className="ios-subhead" style={{ color: "var(--area-finance)" }}>
-          Save
+          {t("Save")}
         </span>
       </div>
 
@@ -47,10 +51,10 @@ export function TransactionScreen() {
             className="tabular font-semibold"
             style={{ fontSize: "calc(var(--pt) * 52)", letterSpacing: "-0.04em" }}
           >
-            €25.00
+            {formatEUR(25, true, locale)}
           </p>
           <p className="ios-footnote text-ink-tertiary" style={{ marginTop: "calc(var(--pt) * 4)" }}>
-            Expense
+            {t("Expense")}
           </p>
         </div>
 
@@ -64,9 +68,9 @@ export function TransactionScreen() {
                 borderTop: index === 0 ? undefined : "1px solid var(--border)",
               }}
             >
-              <span className="ios-subhead text-ink-secondary">{field.label}</span>
+              <span className="ios-subhead text-ink-secondary">{t(field.label)}</span>
               <span className="flex items-center" style={{ gap: "calc(var(--pt) * 6)" }}>
-                <span className="ios-subhead">{field.value}</span>
+                <span className="ios-subhead">{t(field.value)}</span>
                 <Chevron />
               </span>
             </div>
@@ -87,17 +91,15 @@ export function TransactionScreen() {
               color: "#fff",
             }}
           >
-            <span className="ios-headline">Add Transaction</span>
+            <span className="ios-headline">{t("Add Transaction")}</span>
           </div>
 
-          <DecimalPad />
+          <DecimalPad locale={locale} />
         </div>
       </div>
     </ScreenShell>
   );
 }
-
-const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ",", "0", "⌫"];
 
 /**
  * Il tastierino decimale di sistema.
@@ -105,7 +107,9 @@ const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ",", "0", "⌫"];
  * Un foglio di inserimento importo senza tastiera non è una schermata iOS:
  * è una schermata iOS a metà, e si vede subito.
  */
-function DecimalPad() {
+function DecimalPad({ locale }: { locale: "en" | "it" }) {
+  const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", locale === "it" ? "," : ".", "0", "⌫"];
+
   return (
     <div
       className="grid grid-cols-3"

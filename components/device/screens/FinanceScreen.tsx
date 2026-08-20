@@ -13,11 +13,14 @@ import {
   ToolbarButton,
 } from "./ScreenShell";
 import { TabBar } from "../ios/TabBar";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 const icons = { wallet: Wallet, trending: TrendingUp, card: CreditCard };
 
 /** Patrimonio: un numero grande, poi da cosa è fatto. Niente da banca. */
 export function FinanceScreen({ withTabBar = true }: { withTabBar?: boolean }) {
+  const { locale, t } = useI18n();
+
   return (
     <>
       <ScreenShell tint="var(--area-finance)">
@@ -28,11 +31,11 @@ export function FinanceScreen({ withTabBar = true }: { withTabBar?: boolean }) {
           </ToolbarButton>
         </ScreenToolbar>
 
-        <ScreenTitle title="Finance" />
+        <ScreenTitle title={t("Finance")} />
 
         <ScreenContent>
           <IOSCard>
-            <p className="ios-footnote text-ink-tertiary">Net worth</p>
+            <p className="ios-footnote text-ink-tertiary">{t("Net worth")}</p>
             <p
               className="tabular font-semibold"
               style={{
@@ -41,13 +44,13 @@ export function FinanceScreen({ withTabBar = true }: { withTabBar?: boolean }) {
                 marginTop: "calc(var(--pt) * 2)",
               }}
             >
-              {formatEUR(lifeOverview.netWorth)}
+              {formatEUR(lifeOverview.netWorth, false, locale)}
             </p>
             <p
               className="ios-footnote"
               style={{ color: "var(--area-finance)", marginTop: "calc(var(--pt) * 4)" }}
             >
-              +{formatEUR(lifeOverview.monthlyChangeAbs)} this month
+              +{formatEUR(lifeOverview.monthlyChangeAbs, false, locale)} {t("this month")}
             </p>
             <div style={{ marginTop: "calc(var(--pt) * 12)" }}>
               <NetWorthChart series={netWorthSeries} />
@@ -76,24 +79,24 @@ export function FinanceScreen({ withTabBar = true }: { withTabBar?: boolean }) {
                   >
                     <Icon style={{ width: "calc(var(--pt) * 15)" }} />
                   </span>
-                  <p className="ios-subhead flex-1">{account.name}</p>
+                  <p className="ios-subhead flex-1">{t(account.name)}</p>
                   <p className="ios-headline tabular">
                     {account.amount < 0 ? "−" : ""}
-                    {formatEUR(Math.abs(account.amount))}
+                    {formatEUR(Math.abs(account.amount), false, locale)}
                   </p>
                 </IOSCard>
               );
             })}
           </div>
 
-          <IOSSectionTitle action="See all">This month</IOSSectionTitle>
+          <IOSSectionTitle action={t("See all")}>{t("This month")}</IOSSectionTitle>
 
           <IOSCard padding={12} className="flex items-center justify-between">
             <div>
-              <p className="ios-subhead">Spending</p>
-              <p className="ios-caption text-ink-tertiary">18% below your average</p>
+              <p className="ios-subhead">{t("Spending")}</p>
+              <p className="ios-caption text-ink-tertiary">{t("18% below your average")}</p>
             </div>
-            <p className="ios-headline tabular">€1,240</p>
+            <p className="ios-headline tabular">{formatEUR(1_240, false, locale)}</p>
           </IOSCard>
         </ScreenContent>
       </ScreenShell>

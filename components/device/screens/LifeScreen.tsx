@@ -12,6 +12,8 @@ import {
   ToolbarButton,
 } from "./ScreenShell";
 import { TabBar } from "../ios/TabBar";
+import { useI18n } from "@/components/i18n/I18nProvider";
+import { formatDecimal, formatEUR } from "@/lib/utils";
 
 const areaTint: Record<string, string> = {
   home: "var(--area-home)",
@@ -22,6 +24,8 @@ const areaTint: Record<string, string> = {
 
 /** Oggi: la schermata che apre l'app e riassume la giornata. */
 export function LifeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
+  const { locale, t } = useI18n();
+
   return (
     <>
       <ScreenShell tint="var(--area-home)">
@@ -40,23 +44,22 @@ export function LifeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
         </ScreenToolbar>
 
         <ScreenTitle
-          title={`Good morning, ${lifeOverview.user}`}
-          subtitle="Tuesday 18 August"
+          title={t("Good morning, {name}", { name: lifeOverview.user })}
+          subtitle={t("Tuesday 18 August")}
         />
 
         <ScreenContent>
           <IOSCard className="flex items-center" style={{ gap: "calc(var(--pt) * 14)" }}>
             <LifeScoreDial value={lifeOverview.lifeScore} />
             <div className="flex flex-col" style={{ gap: "calc(var(--pt) * 4)" }}>
-              <p className="ios-headline">Today looks good</p>
+              <p className="ios-headline">{t("Today looks good")}</p>
               <p className="ios-footnote text-ink-secondary">
-                Nothing overdue. You have 3 priorities and a free afternoon
-                until 16:30.
+                {t("Nothing overdue. You have 3 priorities and a free afternoon until 16:30.")}
               </p>
             </div>
           </IOSCard>
 
-          <IOSSectionTitle>Your life</IOSSectionTitle>
+          <IOSSectionTitle>{t("Your life")}</IOSSectionTitle>
 
           <div
             className="grid grid-cols-2"
@@ -76,7 +79,7 @@ export function LifeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
                       background: areaTint[area.key],
                     }}
                   />
-                  <span className="ios-subhead">{area.label}</span>
+                  <span className="ios-subhead">{t(area.label)}</span>
                 </div>
                 <p
                   className="ios-title2 tabular"
@@ -92,7 +95,7 @@ export function LifeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
                   className="ios-caption text-ink-tertiary"
                   style={{ marginTop: "calc(var(--pt) * 6)" }}
                 >
-                  {area.detail}
+                  {t(area.detail)}
                 </p>
               </IOSCard>
             ))}
@@ -111,12 +114,12 @@ export function LifeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
               <TrendingUp style={{ width: "calc(var(--pt) * 15)" }} />
             </span>
             <div className="flex-1">
-              <p className="ios-subhead">Net worth</p>
+              <p className="ios-subhead">{t("Net worth")}</p>
               <p className="ios-caption text-ink-tertiary">
-                +{lifeOverview.monthlyChange}% this month
+                +{formatDecimal(lifeOverview.monthlyChange, locale)}% {t("this month")}
               </p>
             </div>
-            <p className="ios-headline tabular">€184,320</p>
+            <p className="ios-headline tabular">{formatEUR(lifeOverview.netWorth, false, locale)}</p>
           </IOSCard>
         </ScreenContent>
       </ScreenShell>

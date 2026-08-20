@@ -4,20 +4,22 @@ import { Bell, CloudCheck, Lock, Users } from "lucide-react";
 import { Chevron, IOSCard, IOSSectionTitle } from "../ios/primitives";
 import { ScreenContent, ScreenShell, ScreenTitle } from "./ScreenShell";
 import { TabBar } from "../ios/TabBar";
-
-const rows = [
-  { label: "Household", value: "2 people", icon: Users, tint: "var(--area-family)" },
-  { label: "Life Cloud", value: "Synced", icon: CloudCheck, tint: "var(--area-home)" },
-  { label: "Privacy & security", value: "Face ID on", icon: Lock, tint: "var(--area-goals)" },
-  { label: "Notifications", value: "Essential only", icon: Bell, tint: "var(--area-upkeep)" },
-];
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /** Profilo: chi sei, con chi condividi, e cosa esce dal telefono. */
 export function ProfileScreen({ withTabBar = true }: { withTabBar?: boolean }) {
+  const { t } = useI18n();
+  const rows = [
+    { label: t("Household"), value: t("2 people"), icon: Users, tint: "var(--area-family)" },
+    { label: t("Life Cloud"), value: t("Synced"), icon: CloudCheck, tint: "var(--area-home)" },
+    { label: t("Privacy & security"), value: t("Face ID on"), icon: Lock, tint: "var(--area-goals)" },
+    { label: t("Notifications"), value: t("Essential only"), icon: Bell, tint: "var(--area-upkeep)" },
+  ];
+
   return (
     <>
       <ScreenShell tint="var(--area-family)">
-        <ScreenTitle title="Profile" />
+        <ScreenTitle title={t("Profile")} />
 
         <ScreenContent>
           <IOSCard className="flex items-center" style={{ gap: "calc(var(--pt) * 13)" }}>
@@ -34,11 +36,11 @@ export function ProfileScreen({ withTabBar = true }: { withTabBar?: boolean }) {
             </span>
             <div>
               <p className="ios-title3">Federico</p>
-              <p className="ios-footnote text-ink-tertiary">Signed in with Apple</p>
+              <p className="ios-footnote text-ink-tertiary">{t("Signed in with Apple")}</p>
             </div>
           </IOSCard>
 
-          <IOSSectionTitle>Settings</IOSSectionTitle>
+          <IOSSectionTitle>{t("Settings")}</IOSSectionTitle>
 
           <div className="ios-card overflow-hidden" style={{ padding: 0 }}>
             {rows.map((row, index) => (
@@ -74,7 +76,7 @@ export function ProfileScreen({ withTabBar = true }: { withTabBar?: boolean }) {
             className="ios-caption text-ink-tertiary"
             style={{ paddingInline: "calc(var(--pt) * 4)" }}
           >
-            Financial data is never shared with other household members.
+            {t("Financial data is never shared with other household members.")}
           </p>
         </ScreenContent>
       </ScreenShell>

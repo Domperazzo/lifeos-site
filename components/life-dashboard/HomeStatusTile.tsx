@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { House } from "lucide-react";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /**
  * «Checking home…» → «Everything under control».
@@ -16,6 +17,7 @@ export function HomeStatusTile() {
   const inView = useInView(ref, { once: true, margin: "-20% 0px" });
   const reduceMotion = useReducedMotion();
   const [checked, setChecked] = useState(false);
+  const { t } = useI18n();
 
   useEffect(() => {
     if (!inView) return;
@@ -36,7 +38,7 @@ export function HomeStatusTile() {
         >
           <House className="size-4" />
         </span>
-        <span className="text-[13px] font-medium text-ink-secondary">Home</span>
+        <span className="text-[13px] font-medium text-ink-secondary">{t("Home")}</span>
       </div>
 
       <div className="mt-4 min-h-[52px]">
@@ -49,9 +51,9 @@ export function HomeStatusTile() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35 }}
             >
-              <p className="text-[15px] font-semibold">Everything under control</p>
+              <p className="text-[15px] font-semibold">{t("Everything under control")}</p>
               <p className="mt-1.5 text-[13px] text-ink-secondary">
-                6 rooms · no overdue tasks · door locked
+                {t("6 rooms · no overdue tasks · door locked")}
               </p>
             </motion.div>
           ) : (
@@ -66,7 +68,7 @@ export function HomeStatusTile() {
                 animate={{ opacity: [1, 0.3, 1] }}
                 transition={{ duration: 1.1, repeat: Infinity }}
               />
-              Checking home…
+              {t("Checking home…")}
             </motion.div>
           )}
         </AnimatePresence>

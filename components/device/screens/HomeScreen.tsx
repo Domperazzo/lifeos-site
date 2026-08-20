@@ -11,9 +11,12 @@ import {
   ToolbarButton,
 } from "./ScreenShell";
 import { TabBar } from "../ios/TabBar";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /** Casa: lo stato generale, poi le stanze. Due per riga, essenziali. */
 export function HomeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
+  const { t } = useI18n();
+
   return (
     <>
       <ScreenShell tint="var(--area-home)">
@@ -24,12 +27,12 @@ export function HomeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
           </ToolbarButton>
         </ScreenToolbar>
 
-        <ScreenTitle title="Home" />
+        <ScreenTitle title={t("Home")} />
 
         <ScreenContent>
           <IOSCard>
             <div className="flex items-baseline justify-between">
-              <p className="ios-headline">Everything under control</p>
+              <p className="ios-headline">{t("Everything under control")}</p>
               <p className="ios-headline tabular" style={{ color: "var(--area-finance)" }}>
                 100%
               </p>
@@ -41,7 +44,7 @@ export function HomeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
               className="ios-footnote text-ink-secondary"
               style={{ marginTop: "calc(var(--pt) * 9)" }}
             >
-              No overdue tasks in any room.
+              {t("No overdue tasks in any room.")}
             </p>
           </IOSCard>
 
@@ -59,12 +62,12 @@ export function HomeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
               <ShieldCheck style={{ width: "calc(var(--pt) * 16)" }} />
             </span>
             <div>
-              <p className="ios-subhead">Home secure</p>
-              <p className="ios-caption text-ink-tertiary">All systems normal</p>
+              <p className="ios-subhead">{t("Home secure")}</p>
+              <p className="ios-caption text-ink-tertiary">{t("All systems normal")}</p>
             </div>
           </IOSCard>
 
-          <IOSSectionTitle action="All (6)">Rooms</IOSSectionTitle>
+          <IOSSectionTitle action={t("All (6)")}>{t("Rooms")}</IOSSectionTitle>
 
           <div className="grid grid-cols-2" style={{ gap: "calc(var(--pt) * 10)" }}>
             {rooms.map((room) => (
@@ -81,7 +84,7 @@ export function HomeScreen({ withTabBar = true }: { withTabBar?: boolean }) {
                   <span className="ios-subhead tabular">{room.cleanliness}%</span>
                 </div>
                 <p className="ios-subhead" style={{ marginTop: "calc(var(--pt) * 9)" }}>
-                  {room.name}
+                  {t(room.name)}
                 </p>
                 <div style={{ marginTop: "calc(var(--pt) * 8)" }}>
                   <IOSProgress value={room.cleanliness} tint={room.tint} height={4} />

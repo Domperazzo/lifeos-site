@@ -6,16 +6,10 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher";
+import { useI18n } from "@/components/i18n/I18nProvider";
 import { Logo } from "@/components/ui/logo";
 import { CTA } from "@/components/ui/button";
-
-const links = [
-  { href: "#product", label: "Product" },
-  { href: "#features", label: "Features" },
-  { href: "#how-it-works", label: "How it works" },
-  { href: "#security", label: "Security" },
-  { href: "#about", label: "About" },
-];
 
 /**
  * All'inizio la barra si confonde con il fondo; appena la pagina scorre
@@ -26,6 +20,14 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const { t } = useI18n();
+  const links = [
+    { href: "#product", label: t("Product") },
+    { href: "#features", label: t("Features") },
+    { href: "#how-it-works", label: t("How it works") },
+    { href: "#security", label: t("Security") },
+    { href: "#about", label: t("About") },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -53,9 +55,9 @@ export function Navbar() {
     >
       <nav
         className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 sm:px-8"
-        aria-label="Main"
+        aria-label={t("Main navigation")}
       >
-        <Link href="#top" aria-label="LifeOS, home" className="text-[19px]">
+        <Link href="#top" aria-label={t("LifeOS, home")} className="text-[19px]">
           <Logo iconSize={30} />
         </Link>
 
@@ -73,16 +75,19 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-1.5">
+          <LocaleSwitcher />
           <ThemeToggle />
-          <CTA href="#get-lifeos" size="sm" className="hidden sm:inline-flex">
-            Get early access
-          </CTA>
+          <div className="hidden sm:block">
+            <CTA href="#get-lifeos" size="sm">
+              {t("Get early access")}
+            </CTA>
+          </div>
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t("Close menu") : t("Open menu")}
             className="grid size-9 place-items-center rounded-full text-ink transition-colors hover:bg-surface-muted md:hidden"
           >
             {open ? <X className="size-[18px]" /> : <Menu className="size-[18px]" />}
@@ -118,7 +123,7 @@ export function Navbar() {
                   onClick={() => setOpen(false)}
                   className="w-full py-3 text-[16px]"
                 >
-                  Get early access
+                  {t("Get early access")}
                 </CTA>
               </li>
             </ul>

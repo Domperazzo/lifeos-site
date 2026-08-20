@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { reducedTransition } from "@/components/ui/reveal";
 import { StatusBar } from "./ios/StatusBar";
 import { HomeIndicator } from "./ios/HomeIndicator";
+import { useI18n } from "@/components/i18n/I18nProvider";
 
 /*
   Proporzioni reali di un iPhone 16/17 Pro (in punti):
@@ -55,6 +56,7 @@ export function IPhoneMockup({
   interactive = false,
 }: IPhoneMockupProps) {
   const reduceMotion = useReducedMotion();
+  const { t } = useI18n();
   const tilt = reduceMotion ? 0 : rotation;
 
   return (
@@ -68,7 +70,7 @@ export function IPhoneMockup({
         } as React.CSSProperties
       }
       role={interactive ? "group" : "img"}
-      aria-label={label ?? "LifeOS on iPhone"}
+      aria-label={label ?? t("LifeOS on iPhone")}
     >
       {/* Tasti laterali: piccoli, ma senza di loro il device non regge. */}
       <SideButtons />

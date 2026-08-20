@@ -3,6 +3,8 @@
 import { ArrowUp, Check } from "lucide-react";
 import type { AskExample } from "@/lib/data";
 import { ScreenContent, ScreenShell, ScreenTitle } from "./ScreenShell";
+import { useI18n } from "@/components/i18n/I18nProvider";
+import { formatEUR } from "@/lib/utils";
 
 /**
  * Ask LifeOS: la domanda in alto, la risposta grande, poi da dove viene.
@@ -20,9 +22,11 @@ export function AskScreen({
   items,
   ordered,
 }: AskExample) {
+  const { t } = useI18n();
+
   return (
     <ScreenShell tint="var(--area-goals)" bottomPadding={40}>
-      <ScreenTitle title="Ask LifeOS" />
+      <ScreenTitle title={t("Ask LifeOS")} />
 
       <ScreenContent>
         <div
@@ -66,7 +70,7 @@ export function AskScreen({
                 "calc(var(--pt) * 8) calc(var(--pt) * 8) calc(var(--pt) * 8) calc(var(--pt) * 16)",
             }}
           >
-            <span className="ios-subhead flex-1 text-ink-tertiary">Anything else?</span>
+            <span className="ios-subhead flex-1 text-ink-tertiary">{t("Anything else?")}</span>
             <span
               className="grid place-items-center rounded-full"
               style={{
@@ -91,10 +95,11 @@ function ComparisonBars({
 }: {
   comparison: NonNullable<AskExample["comparison"]>;
 }) {
+  const { locale, t } = useI18n();
   const max = Math.max(comparison.value, comparison.previous);
   const rows = [
-    { label: "This month", amount: comparison.value, tint: "var(--area-finance)" },
-    { label: "Last month", amount: comparison.previous, tint: "var(--text-tertiary)" },
+    { label: t("This month"), amount: comparison.value, tint: "var(--area-finance)" },
+    { label: t("Last month"), amount: comparison.previous, tint: "var(--text-tertiary)" },
   ];
 
   return (
@@ -116,7 +121,7 @@ function ComparisonBars({
               className="h-[calc(var(--pt)*7)] rounded-full"
               style={{ width: `${(row.amount / max) * 60}%`, background: row.tint, opacity: 0.9 }}
             />
-            <span className="ios-caption tabular">€{row.amount}</span>
+            <span className="ios-caption tabular">{formatEUR(row.amount, false, locale)}</span>
           </div>
         ))}
       </div>
