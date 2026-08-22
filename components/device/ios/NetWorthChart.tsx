@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, useMemo } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 
 const WIDTH = 300;
 const HEIGHT = 84;
@@ -35,13 +34,15 @@ export function NetWorthChart({
   series,
   tint = "var(--area-finance)",
   height = 68,
+  scrollDriven = false,
 }: {
   series: number[];
   tint?: string;
   height?: number;
+  /** Leaves the line fully rendered so a parent ScrollTrigger can drive it. */
+  scrollDriven?: boolean;
 }) {
   const gradientId = useId();
-  const reduceMotion = useReducedMotion();
 
   const { line, area } = useMemo(() => {
     const min = Math.min(...series);
@@ -72,26 +73,33 @@ export function NetWorthChart({
           <stop offset="100%" stopColor={tint} stopOpacity="0" />
         </linearGradient>
       </defs>
-      <motion.path
+      <path
         d={area}
         fill={`url(#${gradientId})`}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: reduceMotion ? 0 : 0.5 }}
+        className="net-worth-area"
       />
-      <motion.path
-        d={line}
-        fill="none"
-        stroke={tint}
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        vectorEffect="non-scaling-stroke"
-        initial={{ pathLength: 0 }}
-        whileInView={{ pathLength: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: reduceMotion ? 0 : 1.1, ease: [0.22, 0.61, 0.36, 1] }}
-      />
+      {scrollDriven ? (
+        <path
+          data-wealth-line
+          d={line}
+          fill="none"
+          stroke={tint}
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+        />
+      ) : (
+        <path
+          d={line}
+          pathLength={1}
+          fill="none"
+          stroke={tint}
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          className="net-worth-line"
+        />
+      )}
     </svg>
   );
 }

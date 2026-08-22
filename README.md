@@ -40,25 +40,22 @@ components/
   i18n/              provider tipizzato + selettore EN/IT
   page/              composizione condivisa delle pagine localizzate
   navigation/        navbar sticky
-  hero/              hero + composizione a tre iPhone
-  device/            IPhoneMockup e le schermate LifeOS
+  storytelling/      le nove scene della homepage + timeline GSAP
+  device/            IPhoneStage, body Blender, fallback e schermate LifeOS
     ios/             primitive iOS: status bar, tab bar, anello, grafico
     screens/         Life · Home · Finance · Tasks · Ask · Automation ·
                      Transaction · Profile
-  life-dashboard/    "Your life at a glance"
-  features/          i quattro blocchi editoriali delle aree
-  intelligence/      catena del contesto + scenario
-  automations/       timeline della giornata
-  ask-lifeos/        Ask LifeOS (interattivo)
-  ecosystem/         widget, Apple Watch, Siri
-  privacy/           i sei principi + cosa si condivide e cosa no
-  philosophy/        sezione editoriale
-  product-demo/      iPhone interattivo con tab bar vera
-  roadmap/ cta/ footer/
+  footer/            footer minimale
   theme/ ui/         toggle del tema e primitive comuni
 lib/                 dati dimostrativi, formattazione, i18n, store del tema
 hooks/               media query, tema
 ```
+
+La homepage è una sola storia: Arrival → Aree → Oggi → Casa → Patrimonio →
+Salute pianificata → sistema connesso → Privacy → finale. Le scene sticky sono
+layout CSS; GSAP/ScrollTrigger controlla la timeline con `scrub`, senza creare
+spacer o duplicare il DOM. Storyboard e pipeline degli asset stanno in
+`docs/APPLE_STYLE_STORYBOARD.md` e `docs/RENDER_PIPELINE.md`.
 
 ## Lingue
 
@@ -148,26 +145,29 @@ sull'iPad il testo occupi meno larghezza. È la differenza fra un'app
 universale e un iPhone stirato — la stessa che l'app ha risolto con
 `DS.Layout`.
 
-Nella sezione *Devices* i due device sono **alla stessa scala**: la
-larghezza del telefono è `calc(var(--pad-w) * 0.332)`, cioè 402/1210. Se
-si ingrandisse il telefono per far scena, la dimostrazione andrebbe persa.
+`IPhoneStage.tsx` è il confine fra la regia e la scocca.
+`RenderedIPhoneMockup.tsx` monta il body Cycles brand-neutral e usa i corner
+point del manifest Blender per sovrapporre lo slot `.ios-screen`. La UI resta
+React: nitida, localizzata e aggiornabile. Se l'asset non carica, il wrapper
+conserva una scocca CSS statica; `IPhoneMockup.tsx` resta il fallback completo
+riutilizzabile fuori dalla homepage.
 
-## La sezione *Devices*
+La scena originale, lo script procedurale e il master non pubblicato stanno in
+`render-source/`; AVIF e WebP consegnati al browser stanno sotto
+`public/assets/renders/iphone/`. Le cinque sezioni mostrate nella tab bar hanno
+sempre i nomi veri dell'app: **Oggi · Casa · Patrimonio · Calendario · Profilo**.
 
-È l'unica interattiva del sito, e tiene **un solo stato** (`TabKey`) per
-due device: la barra laterale dell'iPad e la tab bar dell'iPhone leggono
-lo stesso valore. Nasce dalla fusione di *Devices* e della vecchia demo
-*Have a look around*: separate, la sincronia — che è l'argomento della
-sezione — non si poteva mostrare.
+## Motion
 
-Le cinque sezioni hanno i nomi veri dell'app: **Oggi · Casa · Patrimonio ·
-Calendario · Profilo** (`Section` in `RootView.swift`). ⚠️ Non
-reintrodurre "Life" o "Tasks": non esistono nell'app.
+`use-cinematic-motion.ts` importa GSAP e ScrollTrigger dinamicamente dopo il
+primo render. Ogni timeline è scoped al root della homepage e viene eliminata
+in cleanup. `?motionDebug=true` mostra marker e confini solo in sviluppo.
 
-I contenuti iPad stanno in `components/device/screens/ipad-content.tsx`,
-uno per sezione. Sono gli stessi dati dell'iPhone in una colonna più
-larga — dove il telefono mette due card per riga, qui ce ne stanno
-quattro.
+Il breakpoint mobile non scala la timeline desktop: riduce prospettiva e zoom,
+mantiene il device centrato e assegna al copy una fascia propria. Con
+`prefers-reduced-motion: reduce` GSAP non viene inizializzato; sticky e altezze
+cinematiche vengono disattivati via CSS e ogni scena resta un blocco statico
+completo.
 
 ## Il logo
 
@@ -177,14 +177,16 @@ L'icona è quella di `ios/AppIcon.icon`, ritagliata (il disegno riempiva il
 67% della tela, ora il 79% — la proporzione con cui Apple disegna le
 icone) e ridotta a 128px, che copre un logo da 30pt anche su schermi 3×.
 
-Sono **due** file, `lifeos-icon-light.png` e `lifeos-icon-dark.png`, e non
-è un vezzo: l'icona di LifeOS ha un layer chiaro e uno scuro, e **il fondo
-fa parte del disegno** — bianco di là, nero di qua. Una sola immagine
-lascerebbe un rettangolo bianco sul fondo nero.
+Sono **due** varianti WebP, `lifeos-icon-light.webp` e
+`lifeos-icon-dark.webp` (i PNG restano le sorgenti), e non è un vezzo:
+l'icona di LifeOS ha un layer chiaro e uno scuro, e **il fondo fa parte del
+disegno** — bianco di là, nero di qua. Una sola variante lascerebbe un
+rettangolo incoerente sul tema opposto.
 
-Sono `next/image` con import statico, mai `<img src="/…">`: il sito è
-pubblicato sotto un prefisso, e un percorso assoluto scritto a mano non lo
-riceve — l'immagine sparirebbe **solo in produzione**.
+Entrambi sono import statici, quindi ricevono il `basePath`, e un elemento
+`picture` sceglie la variante coerente con la preferenza cromatica del sistema.
+Il browser ne scarica una sola: due tag `<img>` nascosti via CSS scaricherebbero
+invece entrambe le icone e penalizzerebbero il primo paint.
 
 Il logotipo è testo vero: «Life» pieno, «OS» con `background-clip: text`
 sui blu dell'icona (che nasce da `#0088FF`). I quattro colori stanno in
@@ -231,7 +233,7 @@ node scripts/render-opengraph.mjs
 Non è generata da `next/og`: satori non ha un font in grassetto e il
 titolo usciva sottile. Chrome ha i font veri.
 
-## Le tre regole che il codice segue
+## Le quattro regole che il codice segue
 
 1. **I token vengono dall'app.** Le tinte delle sei aree, i raggi e la
    scala di spaziatura sono quelli di
@@ -253,13 +255,17 @@ titolo usciva sottile. Chrome ha i font veri.
    applica alla **transizione** — c'è `reducedTransition()` in
    `components/ui/reveal.tsx`.
 
+4. **L'animazione migliora una pagina già completa.** Copy, device e fatti
+   privacy esistono nell'HTML statico. GSAP può trasformarli ma non crearli:
+   senza JavaScript, WebGL o motion complessa il racconto resta accessibile.
+
 ## Affermazioni sulla privacy
 
-La sezione *Your life belongs to you* dice solo cose verificabili nel
+La sezione *Your life is personal* dice solo cose verificabili nel
 codice dell'app. I riferimenti sono in `docs/LifeCloud_Privacy_Model.md`
 (§1-§3, §9, §11). Prima di aggiungere una riga lì, va trovata la sua
-prova; le funzionalità non ancora presenti stanno nella sezione
-*roadmap*, dichiarate come tali.
+prova. Salute è mostrata come area pianificata e non dichiara che HealthKit
+sia già integrato.
 
 ## Dati
 

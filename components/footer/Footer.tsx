@@ -6,89 +6,20 @@ import { useI18n } from "@/components/i18n/I18nProvider";
 
 export function Footer() {
   const { t } = useI18n();
-  const columns = [
-    {
-      title: t("Product"),
-      links: [
-        { label: t("Overview"), href: "#product" },
-        { label: t("Features"), href: "#features" },
-        { label: t("How it works"), href: "#how-it-works" },
-      ],
-    },
-    {
-      title: t("Company"),
-      links: [
-        { label: t("About"), href: "#about" },
-        { label: t("Security"), href: "#security" },
-        { label: t("Contact"), href: "mailto:hello@lifeos.app" },
-      ],
-    },
-  ];
 
   return (
-    <footer className="border-t border-line px-5 py-14 sm:px-8">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
-        <div className="flex flex-col gap-10 sm:flex-row sm:justify-between">
-          <div className="flex flex-col gap-3">
-            <Link href="#top" aria-label={t("LifeOS, home")} className="text-[18px]">
-              <Logo iconSize={26} />
-            </Link>
-            <p className="max-w-xs text-[13.5px] leading-relaxed text-ink-tertiary">
-              {t("The personal operating system for your life, home and money.")}
-            </p>
-          </div>
+    <footer className="cinematic-footer">
+      <div className="cinematic-footer-inner">
+        <Link href="#top" aria-label={t("LifeOS, home")} className="text-[18px]">
+          <Logo iconSize={24} />
+        </Link>
 
-          <div className="flex gap-14">
-            {columns.map((column) => (
-              <nav key={column.title} aria-label={column.title} className="flex flex-col gap-3">
-                <p className="text-[13px] font-medium text-ink">{column.title}</p>
-                <ul className="flex flex-col gap-2.5">
-                  {column.links.map((link) => (
-                    <li key={link.label}>
-                      <Link
-                        href={link.href}
-                        className="text-[13.5px] text-ink-tertiary transition-colors hover:text-ink"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            ))}
+        <nav aria-label={t("Footer navigation")}>
+          <Link href="#security">{t("Privacy")}</Link>
+          <a href="mailto:hello@lifeos.app">{t("Contact")}</a>
+        </nav>
 
-            <nav aria-label={t("Social")} className="flex flex-col gap-3">
-              <p className="text-[13px] font-medium text-ink">{t("Elsewhere")}</p>
-              <ul className="flex flex-col gap-2.5">
-                <li>
-                  <a
-                    href="https://www.linkedin.com"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="text-[13.5px] text-ink-tertiary transition-colors hover:text-ink"
-                  >
-                    LinkedIn
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="text-[13.5px] text-ink-tertiary transition-colors hover:text-ink"
-                  >
-                    GitHub
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2 border-t border-line pt-8 text-[12.5px] text-ink-tertiary sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} LifeOS. {t("All rights reserved.")}</p>
-          <p>{t("Designed and built for iOS.")}</p>
-        </div>
+        <p>© {new Date().getFullYear()} LifeOS</p>
       </div>
     </footer>
   );

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import iconLight from "@/public/lifeos-icon-light.png";
-import iconDark from "@/public/lifeos-icon-dark.png";
+import iconLight from "@/public/lifeos-icon-light.webp";
+import iconDark from "@/public/lifeos-icon-dark.webp";
 import { cn } from "@/lib/utils";
 
 /**
@@ -25,23 +25,19 @@ export function AppIcon({ size = 26, className }: { size?: number; className?: s
       )}
       // Il raggio delle icone iOS è una proporzione del lato, non un numero.
       style={{ width: size, height: size, borderRadius: size * 0.225 }}
+      aria-hidden
     >
-      <Image
-        src={iconLight}
-        alt=""
-        width={size}
-        height={size}
-        loading="eager"
-        className="size-full object-cover dark:hidden"
-      />
-      <Image
-        src={iconDark}
-        alt=""
-        width={size}
-        height={size}
-        loading="eager"
-        className="hidden size-full object-cover dark:block"
-      />
+      <picture className="block size-full">
+        <source media="(prefers-color-scheme: dark)" srcSet={iconDark.src} />
+        <Image
+          src={iconLight}
+          alt=""
+          width={size}
+          height={size}
+          loading="eager"
+          className="size-full object-cover"
+        />
+      </picture>
     </span>
   );
 }

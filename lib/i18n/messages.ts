@@ -14,7 +14,10 @@ export const italianMessages = {
   "How it works": "Come funziona",
   "Security": "Sicurezza",
   "About": "Chi siamo",
+  "Inside": "Dentro LifeOS",
   "Get early access": "Richiedi l'accesso",
+  "Get LifeOS": "Ottieni LifeOS",
+  "Footer navigation": "Navigazione a piè di pagina",
   "Open menu": "Apri il menu",
   "Close menu": "Chiudi il menu",
   "Choose language": "Scegli la lingua",
@@ -23,6 +26,60 @@ export const italianMessages = {
   "Switch to {appearance} appearance": "Passa all'aspetto {appearance}",
   "light": "chiaro",
   "dark": "scuro",
+
+  // Occhielli e titoli delle code editoriali, introdotti dalla fusione
+  // delle sezioni di prodotto dentro le scene cinematiche.
+  "A day, from the inside": "Una giornata, da dentro",
+  "Same app, two shapes.": "La stessa app, due forme.",
+  "Enforced in the code": "Applicata nel codice",
+
+  // Homepage cinematografica
+  "Your life. One place.": "La tua vita. Un solo posto.",
+  "Scroll to explore": "Scorri per esplorare",
+  "Life areas connected by LifeOS": "Aree della vita collegate da LifeOS",
+  "Planned": "In programma",
+  "LifeOS areas overview on iPhone": "Panoramica delle aree LifeOS su iPhone",
+  "Everything that matters. Connected.": "Tutto ciò che conta. Connesso.",
+  "LifeOS Today screen on iPhone": "Schermata Oggi di LifeOS su iPhone",
+  "Today, without the noise.": "Oggi, senza rumore.",
+  "What needs you.": "Ciò che ha bisogno di te.",
+  "What can wait.": "Ciò che può aspettare.",
+  "LifeOS doesn't just show your home. It understands it.":
+    "LifeOS non si limita a mostrare la tua casa. La comprende.",
+  "Your home. Understood.": "La tua casa. Compresa.",
+  "Nobody's home.": "Non c'è nessuno in casa.",
+  "Cleaning started automatically.": "Le pulizie sono partite automaticamente.",
+  "Know where you stand. Always.": "Sai sempre dove ti trovi.",
+  "Financial overview": "Quadro finanziario",
+  "Health, in the context of your life.": "La salute, nel contesto della tua vita.",
+  "Planned for HealthKit. Context, not diagnosis.":
+    "In programma con HealthKit. Contesto, non diagnosi.",
+  "Planned area": "Area in programma",
+  "Planned health overview": "Panoramica salute in programma",
+  "Activity": "Attività",
+  "steps": "passi",
+  "Sleep": "Sonno",
+  "last night": "la scorsa notte",
+  "Heart rate": "Frequenza cardiaca",
+  "bpm resting": "bpm a riposo",
+  "One system. Your life.": "Un solo sistema. La tua vita.",
+  "Life signals becoming Today": "I segnali della vita diventano Oggi",
+  "LifeOS Today screen assembled from connected areas":
+    "Schermata Oggi di LifeOS composta dalle aree collegate",
+  "What matters now.": "Ciò che conta, adesso.",
+  "Your life is personal.": "La tua vita è personale.",
+  "It should stay that way.": "Deve restare così.",
+  "No LifeOS server.": "Nessun server LifeOS.",
+  "The app makes no network calls of its own.":
+    "L'app non effettua chiamate di rete proprie.",
+  "Your iCloud account.": "Il tuo account iCloud.",
+  "Sync runs through the Apple account you already control.":
+    "La sincronizzazione passa dall'account Apple che già controlli.",
+  "Sharing is explicit.": "La condivisione è esplicita.",
+  "Household members never see accounts, balances or investments.":
+    "I membri della casa non vedono mai conti, saldi o investimenti.",
+  "Your life. In sync.": "La tua vita. In sintonia.",
+  "See what's inside": "Scopri cosa c'è dentro",
 
   "A personal operating system for iPhone": "Un sistema operativo personale per iPhone",
   "Your life.": "La tua vita.",

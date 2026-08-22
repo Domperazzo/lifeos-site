@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
@@ -19,12 +18,22 @@ import { CTA } from "@/components/ui/button";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const reduceMotion = useReducedMotion();
   const { t } = useI18n();
+  /*
+    Le cinque voci di `main`, con le ancore rifatte sulla sequenza nuova.
+
+    Le sezioni che portavano quegli id sono state assorbite dalle scene: le
+    etichette restano quelle — sono già tradotte e dicono ancora la cosa
+    giusta — ma ciascuna punta alla scena che ne ha ereditato il contenuto.
+    `Product` alla scena Oggi, che nella coda ha la dashboard di
+    `LifeAtAGlance`; `Features` alla Casa, prima delle scene per area;
+    `How it works` alle Automazioni, che hanno assorbito *Contextual
+    intelligence*; `About` alla filosofia, in coda alla Privacy.
+  */
   const links = [
-    { href: "#product", label: t("Product") },
-    { href: "#features", label: t("Features") },
-    { href: "#how-it-works", label: t("How it works") },
+    { href: "#inside", label: t("Product") },
+    { href: "#home", label: t("Features") },
+    { href: "#automations", label: t("How it works") },
     { href: "#security", label: t("Security") },
     { href: "#about", label: t("About") },
   ];
@@ -79,7 +88,7 @@ export function Navbar() {
           <ThemeToggle />
           <div className="hidden sm:block">
             <CTA href="#get-lifeos" size="sm">
-              {t("Get early access")}
+              {t("Get LifeOS")}
             </CTA>
           </div>
           <button
@@ -95,15 +104,10 @@ export function Navbar() {
         </div>
       </nav>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
+      {open ? (
+          <div
             id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: reduceMotion ? 0 : 0.26, ease: [0.22, 0.61, 0.36, 1] }}
-            className="overflow-hidden border-t border-line md:hidden"
+            className="mobile-menu-panel overflow-hidden border-t border-line md:hidden"
           >
             <ul className="flex flex-col gap-1 px-5 py-4">
               {links.map((link) => (
@@ -123,13 +127,12 @@ export function Navbar() {
                   onClick={() => setOpen(false)}
                   className="w-full py-3 text-[16px]"
                 >
-                  {t("Get early access")}
+                  {t("Get LifeOS")}
                 </CTA>
               </li>
             </ul>
-          </motion.div>
+          </div>
         ) : null}
-      </AnimatePresence>
     </header>
   );
 }

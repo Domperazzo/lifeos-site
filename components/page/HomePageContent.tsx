@@ -1,18 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/navigation/Navbar";
-import { Hero } from "@/components/hero/Hero";
-import { LifeAtAGlance } from "@/components/life-dashboard/LifeAtAGlance";
-import { AreasSection } from "@/components/features/AreasSection";
-import { ContextualIntelligence } from "@/components/intelligence/ContextualIntelligence";
-import { Automations } from "@/components/automations/Automations";
-import { AskLifeOS } from "@/components/ask-lifeos/AskLifeOS";
-import { Devices } from "@/components/devices/Devices";
-import { AppleEcosystem } from "@/components/ecosystem/AppleEcosystem";
-import { Privacy } from "@/components/privacy/Privacy";
-import { Philosophy } from "@/components/philosophy/Philosophy";
-import { Roadmap } from "@/components/roadmap/Roadmap";
-import { FinalCTA } from "@/components/cta/FinalCTA";
+import { CinematicStory } from "@/components/storytelling/CinematicStory";
 import { Footer } from "@/components/footer/Footer";
 import { useI18n } from "@/components/i18n/I18nProvider";
 
@@ -28,20 +17,7 @@ export function HomePageContent() {
         {t("Skip to content")}
       </a>
       <Navbar />
-      <main id="main">
-        <Hero />
-        <LifeAtAGlance />
-        <AreasSection />
-        <ContextualIntelligence />
-        <Automations />
-        <AskLifeOS />
-        <Devices />
-        <AppleEcosystem />
-        <Privacy />
-        <Philosophy />
-        <Roadmap />
-        <FinalCTA />
-      </main>
+      <CinematicStory />
       <Footer />
     </>
   );

@@ -18,7 +18,13 @@ import { useI18n } from "@/components/i18n/I18nProvider";
 const icons = { wallet: Wallet, trending: TrendingUp, card: CreditCard };
 
 /** Patrimonio: un numero grande, poi da cosa è fatto. Niente da banca. */
-export function FinanceScreen({ withTabBar = true }: { withTabBar?: boolean }) {
+export function FinanceScreen({
+  withTabBar = true,
+  scrollDrivenChart = false,
+}: {
+  withTabBar?: boolean;
+  scrollDrivenChart?: boolean;
+}) {
   const { locale, t } = useI18n();
 
   return (
@@ -53,7 +59,7 @@ export function FinanceScreen({ withTabBar = true }: { withTabBar?: boolean }) {
               +{formatEUR(lifeOverview.monthlyChangeAbs, false, locale)} {t("this month")}
             </p>
             <div style={{ marginTop: "calc(var(--pt) * 12)" }}>
-              <NetWorthChart series={netWorthSeries} />
+              <NetWorthChart series={netWorthSeries} scrollDriven={scrollDrivenChart} />
             </div>
           </IOSCard>
 
